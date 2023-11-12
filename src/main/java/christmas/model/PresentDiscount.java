@@ -3,7 +3,7 @@ package christmas.model;
 import static christmas.constants.EventRule.PRESENT_THRESHOLD;
 import static christmas.constants.Menu.CHAMPAGNE;
 
-public class PresentDiscount implements Discountable {
+public class PresentDiscount implements Discountable<Integer> {
     private final int amount;
 
     private PresentDiscount(int orderPrice) {
@@ -20,7 +20,7 @@ public class PresentDiscount implements Discountable {
 
 
     @Override
-    public boolean canDiscount(int orderPrice) {
+    public boolean canDiscount(Integer orderPrice) {
         if (orderPrice < PRESENT_THRESHOLD.getValue()) {
             return false;
         }

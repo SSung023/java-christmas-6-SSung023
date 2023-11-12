@@ -1,7 +1,7 @@
 package christmas.model;
 
-public interface Discountable {
-    boolean canDiscount(int condition);
+public interface Discountable<T> {
+    boolean canDiscount(T condition);
 
     int getDiscountPrice();
 }

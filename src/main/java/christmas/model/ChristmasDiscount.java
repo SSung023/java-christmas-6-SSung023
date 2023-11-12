@@ -5,7 +5,7 @@ import static christmas.constants.EventRule.CHRISTMAS_EVENT_START;
 import static christmas.constants.EventRule.CHRISTMAS_EXTRA_DISCOUNT;
 import static christmas.constants.EventRule.CHRISTMAS_INIT_PRICE;
 
-public class ChristmasDiscount implements Discountable {
+public class ChristmasDiscount implements Discountable<Integer> {
     private final int discountPrice;
 
     private ChristmasDiscount(int date) {
@@ -29,7 +29,7 @@ public class ChristmasDiscount implements Discountable {
     }
 
     @Override
-    public boolean canDiscount(int date) {
+    public boolean canDiscount(Integer date) {
         if (date < CHRISTMAS_EVENT_START.getValue() || CHRISTMAS_EVENT_END.getValue() < date) {
             return false;
         }

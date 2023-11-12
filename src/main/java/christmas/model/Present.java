@@ -1,4 +1,4 @@
-package christmas.dto;
+package christmas.model;
 
 import static christmas.constants.EventRule.PRESENT_THRESHOLD;
 import static christmas.constants.Menu.CHAMPAGNE;

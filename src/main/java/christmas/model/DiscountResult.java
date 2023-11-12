@@ -1,4 +1,4 @@
-package christmas.dto;
+package christmas.model;
 
 public interface DiscountResult {
     int getDiscountPrice();

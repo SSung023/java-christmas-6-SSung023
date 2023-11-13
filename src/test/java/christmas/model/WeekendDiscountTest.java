@@ -18,14 +18,14 @@ class WeekendDiscountTest {
             "22, 1",
             "23, 1",
     })
-    public void should_discount(int date, int amount) {
+    public void should_discountPerMain_when_orderValid(int date, int mainAmount) {
         //given
-        UserOrder userOrder = new UserOrder(date, amount);
+        UserOrder userOrder = new UserOrder(0, date, 0, mainAmount);
         WeekendDiscount weekendDiscount = WeekendDiscount.create(userOrder);
 
         //when && then
         assertThat(weekendDiscount.getDiscountPrice())
-                .isEqualTo(MENU_DISCOUNT.getValue() * amount);
+                .isEqualTo(MENU_DISCOUNT.getValue() * mainAmount);
     }
 
 }

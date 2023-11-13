@@ -1,4 +1,4 @@
 package christmas.dto;
 
-public record UserOrder(int date, int numberOfMenu) {
+public record UserOrder(int orderPrice, int date, int mainAmount, int dessertAmount) {
 }

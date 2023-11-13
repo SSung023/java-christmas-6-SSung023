@@ -6,14 +6,14 @@ import christmas.dto.UserOrder;
 import christmas.util.DayAnalyzer;
 
 public class WeekendDiscount implements Discountable<UserOrder> {
-    private final int amount;
+    private final int discountAmount;
 
     private WeekendDiscount(UserOrder condition) {
         if (canDiscount(condition)) {
-            this.amount = condition.numberOfMenu();
+            this.discountAmount = condition.mainAmount();
             return;
         }
-        this.amount = 0;
+        this.discountAmount = 0;
     }
 
     public static WeekendDiscount create(UserOrder condition) {
@@ -27,6 +27,6 @@ public class WeekendDiscount implements Discountable<UserOrder> {
 
     @Override
     public int getDiscountPrice() {
-        return amount * MENU_DISCOUNT.getValue();
+        return discountAmount * MENU_DISCOUNT.getValue();
     }
 }

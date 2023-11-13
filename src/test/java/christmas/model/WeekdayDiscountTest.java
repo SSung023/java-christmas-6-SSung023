@@ -18,14 +18,14 @@ class WeekdayDiscountTest {
             "13, 1",
             "14, 1"
     })
-    public void should_discount(int date, int amount) {
+    public void should_discountPerDessert_when_orderValid(int date, int dessertAmount) {
         //given
-        UserOrder userOrder = new UserOrder(date, amount);
+        UserOrder userOrder = new UserOrder(0, date, 0, dessertAmount);
         WeekdayDiscount weekdayDiscount = WeekdayDiscount.create(userOrder);
 
         //when && then
         assertThat(weekdayDiscount.getDiscountPrice())
-                .isEqualTo(MENU_DISCOUNT.getValue() * amount);
+                .isEqualTo(MENU_DISCOUNT.getValue() * dessertAmount);
     }
 
     @ParameterizedTest(name = "주문 날짜: {0}, 디저트 주문 개수: {1}")
@@ -37,9 +37,9 @@ class WeekdayDiscountTest {
             "13, 0",
             "14, 0"
     })
-    public void should(int date, int amount) {
+    public void should_notDiscount_when_dessertAmountIsZero(int date, int dessertAmount) {
         //given
-        UserOrder userOrder = new UserOrder(date, amount);
+        UserOrder userOrder = new UserOrder(0, date, 0, dessertAmount);
         WeekdayDiscount weekdayDiscount = WeekdayDiscount.create(userOrder);
 
         //when && then

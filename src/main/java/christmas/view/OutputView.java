@@ -1,13 +1,15 @@
 package christmas.view;
 
-import static christmas.constants.menu.Menu.CHAMPAGNE;
+import static christmas.constants.Message.ASK_VISIT_DATE;
 import static christmas.constants.Message.DISCOUNT_HEADER;
 import static christmas.constants.Message.EVENT_BADGE;
 import static christmas.constants.Message.EXPECT_PAY_HEADER;
+import static christmas.constants.Message.GREETING;
 import static christmas.constants.Message.MENU_FORMAT;
 import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.PRESENT_HEADER;
 import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
+import static christmas.constants.menu.Menu.CHAMPAGNE;
 
 import christmas.constants.event.BadgeType;
 import christmas.model.DiscountResult;
@@ -19,6 +21,14 @@ public class OutputView {
 
     public OutputView() {
         decimalFormat = new DecimalFormat("#,###");
+    }
+
+    public void printGreeting() {
+        System.out.println(GREETING.getMessage());
+    }
+
+    public void printAskVisitDate() {
+        System.out.println(ASK_VISIT_DATE.getMessage());
     }
 
     public void printPresent(PresentDiscount presentDiscount) {
@@ -66,5 +76,9 @@ public class OutputView {
     public void printEventBadge(BadgeType badgeType) {
         System.out.println(EVENT_BADGE.getMessage());
         System.out.println(badgeType.getName());
+    }
+
+    public void printError(String errorMessage) {
+        System.out.println(errorMessage);
     }
 }

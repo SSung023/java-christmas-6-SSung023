@@ -3,7 +3,8 @@ package christmas.constants.event;
 public enum EventRule {
     EVENT_THRESHOLD(10_000),
     PRESENT_THRESHOLD(120_000),
-    CHRISTMAS_EVENT_START(1),
+    EVENT_START(1),
+    EVENT_END(31),
     CHRISTMAS_EVENT_END(25),
     CHRISTMAS_INIT_PRICE(1_000),
     CHRISTMAS_EXTRA_DISCOUNT(100),

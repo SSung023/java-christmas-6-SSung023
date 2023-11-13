@@ -1,9 +1,9 @@
 package christmas.model.discount;
 
 import static christmas.constants.event.EventRule.CHRISTMAS_EVENT_END;
-import static christmas.constants.event.EventRule.CHRISTMAS_EVENT_START;
 import static christmas.constants.event.EventRule.CHRISTMAS_EXTRA_DISCOUNT;
 import static christmas.constants.event.EventRule.CHRISTMAS_INIT_PRICE;
+import static christmas.constants.event.EventRule.EVENT_START;
 
 public class ChristmasDiscount implements Discountable<Integer> {
     private final int discountPrice;
@@ -25,12 +25,12 @@ public class ChristmasDiscount implements Discountable<Integer> {
     }
 
     private int getAdditionalDiscount(int date) {
-        return CHRISTMAS_EXTRA_DISCOUNT.getValue() * (date - CHRISTMAS_EVENT_START.getValue());
+        return CHRISTMAS_EXTRA_DISCOUNT.getValue() * (date - EVENT_START.getValue());
     }
 
     @Override
     public boolean canDiscount(Integer date) {
-        if (date < CHRISTMAS_EVENT_START.getValue() || CHRISTMAS_EVENT_END.getValue() < date) {
+        if (date < EVENT_START.getValue() || CHRISTMAS_EVENT_END.getValue() < date) {
             return false;
         }
         return true;

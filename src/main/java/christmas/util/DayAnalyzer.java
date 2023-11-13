@@ -10,6 +10,7 @@ import java.util.Arrays;
 
 public class DayAnalyzer {
     private static final int DAY_OF_WEEK = 7;
+    private static final int CHRISTMAS_DAY = 25;
 
     private static Day getDay(int date) {
         return Arrays.stream(Day.values())
@@ -28,7 +29,15 @@ public class DayAnalyzer {
 
     public static boolean isWeekend(int date) {
         Day targetDay = getDay(date);
-        if (targetDay.compareTo(FRIDAY) == 0 || targetDay.compareTo(SATURDAY) == 0) {
+        if (targetDay == FRIDAY || targetDay == SATURDAY) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isSpecialDay(int date) {
+        Day targetDay = getDay(date);
+        if (targetDay == SUNDAY || date == CHRISTMAS_DAY) {
             return true;
         }
         return false;

@@ -1,28 +1,28 @@
-package christmas.model;
+package christmas.model.discount;
 
 import static christmas.constants.EventRule.MENU_DISCOUNT;
 
 import christmas.dto.UserOrder;
 import christmas.util.DayAnalyzer;
 
-public class WeekendDiscount implements Discountable<UserOrder> {
+public class WeekdayDiscount implements Discountable<UserOrder> {
     private final int discountAmount;
 
-    private WeekendDiscount(UserOrder condition) {
+    private WeekdayDiscount(UserOrder condition) {
         if (canDiscount(condition)) {
-            this.discountAmount = condition.mainAmount();
+            discountAmount = condition.dessertAmount();
             return;
         }
-        this.discountAmount = 0;
+        discountAmount = 0;
     }
 
-    public static WeekendDiscount create(UserOrder condition) {
-        return new WeekendDiscount(condition);
+    public static WeekdayDiscount create(UserOrder condition) {
+        return new WeekdayDiscount(condition);
     }
 
     @Override
     public boolean canDiscount(UserOrder condition) {
-        return DayAnalyzer.isWeekend(condition.date());
+        return DayAnalyzer.isWeekday(condition.date());
     }
 
     @Override

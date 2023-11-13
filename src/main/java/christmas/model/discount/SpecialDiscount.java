@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.discount;
 
 import static christmas.constants.EventRule.SPECIAL_DISCOUNT;
 

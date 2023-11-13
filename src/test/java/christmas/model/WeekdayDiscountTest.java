@@ -4,6 +4,7 @@ import static christmas.constants.EventRule.MENU_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.dto.UserOrder;
+import christmas.model.discount.WeekdayDiscount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

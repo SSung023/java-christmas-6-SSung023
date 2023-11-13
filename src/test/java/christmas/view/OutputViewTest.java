@@ -2,7 +2,7 @@ package christmas.view;
 
 import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
-import christmas.model.PresentDiscount;
+import christmas.model.discount.PresentDiscount;
 import christmas.service.DiscountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

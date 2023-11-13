@@ -9,7 +9,7 @@ import static christmas.constants.Message.PRESENT_HEADER;
 import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
 
 import christmas.model.DiscountResult;
-import christmas.model.PresentDiscount;
+import christmas.model.discount.PresentDiscount;
 import java.text.DecimalFormat;
 
 public class OutputView {

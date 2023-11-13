@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.discount;
 
 import static christmas.constants.EventRule.CHRISTMAS_EVENT_END;
 import static christmas.constants.EventRule.CHRISTMAS_EVENT_START;

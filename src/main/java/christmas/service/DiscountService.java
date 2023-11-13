@@ -8,12 +8,12 @@ import static christmas.constants.EventType.WEEKDAY;
 import static christmas.constants.EventType.WEEKEND;
 
 import christmas.dto.UserOrder;
-import christmas.model.ChristmasDiscount;
 import christmas.model.DiscountResult;
-import christmas.model.PresentDiscount;
-import christmas.model.SpecialDiscount;
-import christmas.model.WeekdayDiscount;
-import christmas.model.WeekendDiscount;
+import christmas.model.discount.ChristmasDiscount;
+import christmas.model.discount.PresentDiscount;
+import christmas.model.discount.SpecialDiscount;
+import christmas.model.discount.WeekdayDiscount;
+import christmas.model.discount.WeekendDiscount;
 
 public class DiscountService {
 

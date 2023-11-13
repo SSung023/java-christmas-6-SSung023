@@ -1,8 +1,8 @@
 package christmas.model;
 
-import static christmas.constants.EventType.PRESENT;
+import static christmas.constants.event.EventType.PRESENT;
 
-import christmas.constants.EventType;
+import christmas.constants.event.EventType;
 import christmas.model.discount.Discountable;
 import java.util.EnumMap;
 import java.util.Map;

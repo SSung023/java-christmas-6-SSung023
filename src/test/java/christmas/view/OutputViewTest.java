@@ -1,6 +1,6 @@
 package christmas.view;
 
-import christmas.constants.BadgeType;
+import christmas.constants.event.BadgeType;
 import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
 import christmas.model.discount.PresentDiscount;

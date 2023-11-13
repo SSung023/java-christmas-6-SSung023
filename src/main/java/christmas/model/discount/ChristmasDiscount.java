@@ -1,9 +1,9 @@
 package christmas.model.discount;
 
-import static christmas.constants.EventRule.CHRISTMAS_EVENT_END;
-import static christmas.constants.EventRule.CHRISTMAS_EVENT_START;
-import static christmas.constants.EventRule.CHRISTMAS_EXTRA_DISCOUNT;
-import static christmas.constants.EventRule.CHRISTMAS_INIT_PRICE;
+import static christmas.constants.event.EventRule.CHRISTMAS_EVENT_END;
+import static christmas.constants.event.EventRule.CHRISTMAS_EVENT_START;
+import static christmas.constants.event.EventRule.CHRISTMAS_EXTRA_DISCOUNT;
+import static christmas.constants.event.EventRule.CHRISTMAS_INIT_PRICE;
 
 public class ChristmasDiscount implements Discountable<Integer> {
     private final int discountPrice;

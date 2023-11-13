@@ -1,6 +1,6 @@
 package christmas.model.discount;
 
-import static christmas.constants.EventRule.SPECIAL_DISCOUNT;
+import static christmas.constants.event.EventRule.SPECIAL_DISCOUNT;
 
 import christmas.util.DayAnalyzer;
 

@@ -1,10 +1,10 @@
 package christmas.service;
 
-import static christmas.constants.EventType.CHRISTMAS;
-import static christmas.constants.EventType.PRESENT;
-import static christmas.constants.EventType.SPECIAL;
-import static christmas.constants.EventType.WEEKDAY;
-import static christmas.constants.EventType.WEEKEND;
+import static christmas.constants.event.EventType.CHRISTMAS;
+import static christmas.constants.event.EventType.PRESENT;
+import static christmas.constants.event.EventType.SPECIAL;
+import static christmas.constants.event.EventType.WEEKDAY;
+import static christmas.constants.event.EventType.WEEKEND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.dto.UserOrder;

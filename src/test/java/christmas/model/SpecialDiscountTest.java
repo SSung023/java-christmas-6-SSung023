@@ -1,6 +1,6 @@
 package christmas.model;
 
-import static christmas.constants.EventRule.SPECIAL_DISCOUNT;
+import static christmas.constants.event.EventRule.SPECIAL_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.model.discount.SpecialDiscount;

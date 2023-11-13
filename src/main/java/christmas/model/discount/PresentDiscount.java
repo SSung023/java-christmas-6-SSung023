@@ -1,7 +1,7 @@
 package christmas.model.discount;
 
-import static christmas.constants.EventRule.PRESENT_THRESHOLD;
-import static christmas.constants.Menu.CHAMPAGNE;
+import static christmas.constants.event.EventRule.PRESENT_THRESHOLD;
+import static christmas.constants.menu.Menu.CHAMPAGNE;
 
 public class PresentDiscount implements Discountable<Integer> {
     private final int amount;

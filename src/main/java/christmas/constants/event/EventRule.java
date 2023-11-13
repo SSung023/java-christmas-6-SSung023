@@ -1,4 +1,4 @@
-package christmas.constants;
+package christmas.constants.event;
 
 public enum EventRule {
     EVENT_THRESHOLD(10_000),

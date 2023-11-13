@@ -1,6 +1,6 @@
 package christmas.view;
 
-import static christmas.constants.Menu.CHAMPAGNE;
+import static christmas.constants.menu.Menu.CHAMPAGNE;
 import static christmas.constants.Message.DISCOUNT_HEADER;
 import static christmas.constants.Message.EVENT_BADGE;
 import static christmas.constants.Message.EXPECT_PAY_HEADER;
@@ -9,7 +9,7 @@ import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.PRESENT_HEADER;
 import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
 
-import christmas.constants.BadgeType;
+import christmas.constants.event.BadgeType;
 import christmas.model.DiscountResult;
 import christmas.model.discount.PresentDiscount;
 import java.text.DecimalFormat;

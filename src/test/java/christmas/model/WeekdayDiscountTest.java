@@ -1,6 +1,6 @@
 package christmas.model;
 
-import static christmas.constants.EventRule.MENU_DISCOUNT;
+import static christmas.constants.event.EventRule.MENU_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.dto.UserOrder;

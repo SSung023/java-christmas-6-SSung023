@@ -1,11 +1,11 @@
 package christmas.service;
 
-import static christmas.constants.EventRule.EVENT_THRESHOLD;
-import static christmas.constants.EventType.CHRISTMAS;
-import static christmas.constants.EventType.PRESENT;
-import static christmas.constants.EventType.SPECIAL;
-import static christmas.constants.EventType.WEEKDAY;
-import static christmas.constants.EventType.WEEKEND;
+import static christmas.constants.event.EventRule.EVENT_THRESHOLD;
+import static christmas.constants.event.EventType.CHRISTMAS;
+import static christmas.constants.event.EventType.PRESENT;
+import static christmas.constants.event.EventType.SPECIAL;
+import static christmas.constants.event.EventType.WEEKDAY;
+import static christmas.constants.event.EventType.WEEKEND;
 
 import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;

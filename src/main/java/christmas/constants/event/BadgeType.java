@@ -1,4 +1,4 @@
-package christmas.constants;
+package christmas.constants.event;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -23,7 +23,7 @@ public enum BadgeType {
                 .min(Comparator.comparingInt(BadgeType::getThreshold))
                 .orElseThrow();
     }
-    
+
     public String getName() {
         return name;
     }

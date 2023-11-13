@@ -1,9 +1,9 @@
-package christmas.constants;
+package christmas.constants.menu;
 
-import static christmas.constants.MenuType.APPETIZER;
-import static christmas.constants.MenuType.DESSERT;
-import static christmas.constants.MenuType.DRINKS;
-import static christmas.constants.MenuType.MAIN;
+import static christmas.constants.menu.MenuType.APPETIZER;
+import static christmas.constants.menu.MenuType.DESSERT;
+import static christmas.constants.menu.MenuType.DRINKS;
+import static christmas.constants.menu.MenuType.MAIN;
 
 public enum Menu {
     MUSHROOM_SOUP(APPETIZER, "양송이수프", 6000),

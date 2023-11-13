@@ -1,6 +1,6 @@
 package christmas.model;
 
-import christmas.constants.BadgeType;
+import christmas.constants.event.BadgeType;
 
 public class Badge {
     private final BadgeType badgeType;

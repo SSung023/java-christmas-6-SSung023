@@ -9,7 +9,7 @@ public enum Message {
     MENU_FORMAT("%s %d개"),
     TOTAL_HEADER("<할인 전 총주문 금액>"),
     PRESENT_HEADER("<증정 메뉴>"),
-    DISCOUNT_HEADER("<혜택 내역>"),
+    DISCOUNT_HEADER(String.format("<혜택 내역>%n")),
     TOTAL_DISCOUNT_HEADER("<총혜택 금액>"),
     EXPECT_PAY_HEADER("<할인 후 예상 결제 금액>"),
     EVENT_BADGE("<12월 이벤트 배지>"),

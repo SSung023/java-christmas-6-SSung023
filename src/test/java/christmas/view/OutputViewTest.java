@@ -37,4 +37,17 @@ class OutputViewTest {
         //then
         outputView.printDiscountDetails(discountResult);
     }
+
+    @Test
+    @DisplayName("총 혜택 내역에 대한 출력 테스트")
+    public void totalDiscountPrintTest() {
+        //given
+        UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
+
+        //when
+        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+
+        //then
+        outputView.printTotalDiscountPrice(discountResult);
+    }
 }

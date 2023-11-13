@@ -5,6 +5,7 @@ import static christmas.constants.Message.DISCOUNT_HEADER;
 import static christmas.constants.Message.MENU_FORMAT;
 import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.PRESENT_HEADER;
+import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
 
 import christmas.model.DiscountResult;
 import christmas.model.PresentDiscount;
@@ -26,7 +27,7 @@ public class OutputView {
         System.out.printf(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), presentDiscount.getAmount());
     }
 
-    //TODO: DiscountResult에서 entry를 받아오는게 아쉽다...
+    //TODO: DiscountResult에서 entry를 받아오는게 아쉽다... 코드의 길이를 더 줄여보자
     public void printDiscountDetails(DiscountResult discountResult) {
         StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage());
 
@@ -44,5 +45,10 @@ public class OutputView {
                     );
                 });
         System.out.println(stringBuilder);
+    }
+
+    public void printTotalDiscountPrice(DiscountResult discountResult) {
+        System.out.println(TOTAL_DISCOUNT_HEADER.getMessage());
+        System.out.printf("-%s원", decimalFormat.format(discountResult.getTotalDiscountPrice()));
     }
 }

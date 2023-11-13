@@ -17,8 +17,7 @@ public class PresentDiscount implements Discountable<Integer> {
     public static PresentDiscount create(int orderPrice) {
         return new PresentDiscount(orderPrice);
     }
-
-
+    
     @Override
     public boolean canDiscount(Integer orderPrice) {
         if (orderPrice < PRESENT_THRESHOLD.getValue()) {
@@ -30,5 +29,9 @@ public class PresentDiscount implements Discountable<Integer> {
     @Override
     public int getDiscountPrice() {
         return CHAMPAGNE.getPrice() * amount;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

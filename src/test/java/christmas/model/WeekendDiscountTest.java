@@ -20,7 +20,7 @@ class WeekendDiscountTest {
     })
     public void should_discountPerMain_when_orderValid(int date, int mainAmount) {
         //given
-        UserOrder userOrder = new UserOrder(0, date, 0, mainAmount);
+        UserOrder userOrder = new UserOrder(0, date, mainAmount, 0);
         WeekendDiscount weekendDiscount = WeekendDiscount.create(userOrder);
 
         //when && then

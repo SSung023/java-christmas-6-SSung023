@@ -1,5 +1,7 @@
 package christmas.util;
 
+import static christmas.constants.Day.FRIDAY;
+import static christmas.constants.Day.SATURDAY;
 import static christmas.constants.Day.SUNDAY;
 import static christmas.constants.Day.THURSDAY;
 
@@ -19,6 +21,14 @@ public class DayAnalyzer {
     public static boolean isWeekday(int date) {
         Day targetDay = getDay(date);
         if (targetDay.compareTo(THURSDAY) <= 0 && targetDay.compareTo(SUNDAY) >= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isWeekend(int date) {
+        Day targetDay = getDay(date);
+        if (targetDay.compareTo(FRIDAY) == 0 || targetDay.compareTo(SATURDAY) == 0) {
             return true;
         }
         return false;

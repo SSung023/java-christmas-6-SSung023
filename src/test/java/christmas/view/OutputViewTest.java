@@ -1,11 +1,14 @@
 package christmas.view;
 
+import christmas.constants.BadgeType;
 import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
 import christmas.model.discount.PresentDiscount;
 import christmas.service.DiscountService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 class OutputViewTest {
     private final OutputView outputView = new OutputView();
@@ -62,5 +65,13 @@ class OutputViewTest {
 
         //then
         outputView.printExpectedPrice(userOrder.orderPrice(), discountResult);
+    }
+
+    @ParameterizedTest
+    @DisplayName("이벤트 베지 출력 테스트")
+    @EnumSource(value = BadgeType.class)
+    public void eventBadgePrintTest(BadgeType badgeType) {
+        outputView.printEventBadge(badgeType);
+
     }
 }

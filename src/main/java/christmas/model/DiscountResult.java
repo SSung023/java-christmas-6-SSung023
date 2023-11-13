@@ -1,5 +1,7 @@
 package christmas.model;
 
+import static christmas.constants.EventType.PRESENT;
+
 import christmas.constants.EventType;
 import java.util.EnumMap;
 import java.util.Map;
@@ -24,6 +26,14 @@ public class DiscountResult {
             return 0;
         }
         return discountPrice;
+    }
+
+    public int getTotalBenefitPrice() {
+        return discountResult.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey() != PRESENT)
+                .mapToInt(value -> value.getValue().getDiscountPrice())
+                .sum();
     }
 
     public int getTotalDiscountPrice() {

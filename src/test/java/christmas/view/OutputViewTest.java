@@ -50,4 +50,17 @@ class OutputViewTest {
         //then
         outputView.printTotalDiscountPrice(discountResult);
     }
+
+    @Test
+    @DisplayName("할인 후 예상 결제 금액 출력 테스트")
+    public void expectedPricePrintTest() {
+        //given
+        UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
+
+        //when
+        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+
+        //then
+        outputView.printExpectedPrice(userOrder.orderPrice(), discountResult);
+    }
 }

@@ -2,6 +2,7 @@ package christmas.view;
 
 import static christmas.constants.Menu.CHAMPAGNE;
 import static christmas.constants.Message.DISCOUNT_HEADER;
+import static christmas.constants.Message.EXPECT_PAY_HEADER;
 import static christmas.constants.Message.MENU_FORMAT;
 import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.PRESENT_HEADER;
@@ -50,5 +51,12 @@ public class OutputView {
     public void printTotalDiscountPrice(DiscountResult discountResult) {
         System.out.println(TOTAL_DISCOUNT_HEADER.getMessage());
         System.out.printf("-%s원", decimalFormat.format(discountResult.getTotalDiscountPrice()));
+    }
+
+    public void printExpectedPrice(int orderPrice, DiscountResult discountResult) {
+        System.out.println(EXPECT_PAY_HEADER.getMessage());
+
+        int expectedPrice = orderPrice - discountResult.getTotalBenefitPrice();
+        System.out.printf("%s원", decimalFormat.format(expectedPrice));
     }
 }

@@ -22,7 +22,11 @@ public class Parser {
         }
     }
 
-    public static List<String> parseToList(String input, String delimiter) {
-        return List.of(input.split(delimiter));
+    public static List<String> parseToMenu(String input, String delimiter) {
+        try {
+            return List.of(input.split(delimiter));
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
+        }
     }
 }

@@ -20,12 +20,14 @@ public class InputView {
     }
 
     public List<SingleOrder> askOrderMenu() {
-        List<String> menus = Parser.parseToList(getInput(), ",");
+        //TODO: ,를 delimiter 상수로
+        List<String> menus = Parser.parseToMenu(getInput(), ",");
 
+        //TODO: 코드가 맘에 안들어.. 안이뻐..
         return menus.stream()
                 .map(singleOrder -> {
-                    List<String> list = Parser.parseToList(singleOrder, "-");
-                    return new SingleOrder(list.get(0), Parser.parseToAmount(list.get(1)));
+                    inputValidator.validateOrder(singleOrder);
+                    return SingleOrder.create(singleOrder);
                 })
                 .toList();
     }

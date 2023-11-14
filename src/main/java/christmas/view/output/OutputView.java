@@ -2,11 +2,13 @@ package christmas.view.output;
 
 import static christmas.constants.Message.ASK_MENU;
 import static christmas.constants.Message.ASK_VISIT_DATE;
+import static christmas.constants.Message.DISCOUNT_FORMAT;
 import static christmas.constants.Message.DISCOUNT_HEADER;
 import static christmas.constants.Message.EVENT_BADGE;
 import static christmas.constants.Message.EXPECT_PAY_HEADER;
 import static christmas.constants.Message.GREETING;
 import static christmas.constants.Message.MENU_FORMAT;
+import static christmas.constants.Message.NEW_LINE;
 import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.ORDER_HEADER;
 import static christmas.constants.Message.PRESENT_HEADER;
@@ -44,17 +46,20 @@ public class OutputView {
     }
 
     public void printPresent(Discountable presentDiscount) {
+        writer.printNewLine(2);
         writer.printLine(PRESENT_HEADER.getMessage());
         if (presentDiscount.getDiscountPrice() == 0) {
             writer.printLine(NONE.getMessage());
             return;
         }
         writer.printFormat(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), 1);
+        writer.printNewLine(1);
     }
 
-    //TODO: DiscountResult에서 entry를 받아오는게 아쉽다... 코드의 길이를 더 줄여보자
+    //TODO: 코드 길이를 줄여보자
     public void printDiscountDetails(DiscountResult discountResult) {
         StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage());
+        stringBuilder.append(NEW_LINE.getMessage());
 
         if (discountResult.isEventNotApplied()) {
             stringBuilder.append(NONE.getMessage());
@@ -66,7 +71,7 @@ public class OutputView {
                 .forEach(entry -> {
                     int priceByEvent = discountResult.getDiscountPriceByEvent(entry.getKey());
                     stringBuilder.append(
-                            String.format("%s: -%s원%n", entry.getKey().getDescription(),
+                            String.format(DISCOUNT_FORMAT.getMessage(), entry.getKey().getDescription(),
                                     decimalFormat.format(priceByEvent))
                     );
                 });
@@ -76,11 +81,13 @@ public class OutputView {
     public void printTotalDiscountPrice(DiscountResult discountResult) {
         writer.printLine(TOTAL_DISCOUNT_HEADER.getMessage());
         writer.printFormat("-%s원", decimalFormat.format(discountResult.getTotalDiscountPrice()));
+        writer.printNewLine(2);
     }
 
     public void printExpectedPrice(int expectedPrice) {
         writer.printLine(EXPECT_PAY_HEADER.getMessage());
         writer.printFormat("%s원", decimalFormat.format(expectedPrice));
+        writer.printNewLine(2);
     }
 
     public void printEventBadge(BadgeType badgeType) {
@@ -94,6 +101,7 @@ public class OutputView {
 
     public void printOrderMenu(Map<Menu, Integer> menuScript) {
         StringBuilder stringBuilder = new StringBuilder(ORDER_HEADER.getMessage());
+        stringBuilder.append(NEW_LINE.getMessage());
         menuScript.forEach(
                 (menu, amount) -> stringBuilder.append(String.format(MENU_FORMAT.getMessage(), menu.getName(), amount))
         );
@@ -107,5 +115,6 @@ public class OutputView {
 
     public void printPreview(int date) {
         writer.printFormat(PREVIEW.getMessage(), date);
+        writer.printNewLine(2);
     }
 }

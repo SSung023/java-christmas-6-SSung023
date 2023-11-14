@@ -24,11 +24,11 @@ public enum BadgeType {
                 .orElseThrow();
     }
 
-    public String getName() {
-        return name;
+    private int getThreshold() {
+        return threshold;
     }
 
-    public int getThreshold() {
-        return threshold;
+    public String getName() {
+        return name;
     }
 }

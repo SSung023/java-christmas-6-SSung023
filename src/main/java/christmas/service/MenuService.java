@@ -1,7 +1,6 @@
 package christmas.service;
 
 import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
-import static christmas.constants.ErrorCode.MENU_OVERFLOW;
 import static christmas.constants.event.EventRule.MAX_MENU_AMOUNT;
 
 import christmas.constants.menu.Menu;
@@ -36,12 +35,12 @@ public class MenuService {
 
     private void validate(List<SingleOrder> singleOrders) {
         validateDuplicate(singleOrders);
-        validateAmount(singleOrders);
+        validatePerMenuAmount(singleOrders);
         validateOnlyDrink(singleOrders);
-        validateMenuAmount(singleOrders);
+        validateTotalMenuAmount(singleOrders);
     }
 
-    private void validateAmount(List<SingleOrder> singleOrders) {
+    private void validatePerMenuAmount(List<SingleOrder> singleOrders) {
         boolean present = singleOrders.stream()
                 .anyMatch(singleOrder -> singleOrder.amount() < 1);
         if (present) {
@@ -78,12 +77,12 @@ public class MenuService {
         }
     }
 
-    private void validateMenuAmount(List<SingleOrder> singleOrders) {
+    private void validateTotalMenuAmount(List<SingleOrder> singleOrders) {
         int totalAmount = singleOrders.stream()
-                .mapToInt(singleOrder -> singleOrder.amount())
+                .mapToInt(SingleOrder::amount)
                 .sum();
         if (totalAmount >= MAX_MENU_AMOUNT.getValue()) {
-            throw new IllegalArgumentException(MENU_OVERFLOW.getMessage());
+            throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }
 

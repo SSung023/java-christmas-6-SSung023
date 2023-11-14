@@ -5,7 +5,6 @@ import static christmas.constants.menu.MenuType.MAIN;
 
 import christmas.constants.event.BadgeType;
 import christmas.constants.event.EventType;
-import christmas.constants.menu.Menu;
 import christmas.dto.SingleOrder;
 import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
@@ -14,14 +13,12 @@ import christmas.service.MenuService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
-import java.util.Map;
 
 public class EventController {
     private final DiscountService discountService;
     private final MenuService menuService;
     private final InputView inputView;
     private final OutputView outputView;
-    private UserOrder userOrder; // TODO: 이후에 의존성 낮추기
 
     public EventController(DiscountService discountService, MenuService menuService, InputView inputView,
                            OutputView outputView) {
@@ -33,15 +30,13 @@ public class EventController {
 
     public void run() {
         int visitDate = getVisitDate();
-        getOrderMenu(visitDate);
-        userOrder = new UserOrder(menuService.getOrderPrice(), visitDate,
-                menuService.getAmountByMenu(MAIN),
-                menuService.getAmountByMenu(DESSERT));
+        UserOrder userOrder = getOrderMenu(visitDate);
+        printOrderMenu();
 
-        showUserOrder();
-        DiscountResult discount = discount(userOrder);
-        printDiscountDetails(userOrder, discount);
-        printBadge(discount);
+        DiscountResult discountResult = getDiscountResult(userOrder);
+        printDiscountDetails(userOrder, discountResult);
+
+        printBadge(discountResult);
     }
 
     private int getVisitDate() {
@@ -52,13 +47,14 @@ public class EventController {
         return visitDate;
     }
 
-    private Map<Menu, Integer> getOrderMenu(int visitDate) {
-        //TODO: (MenuService) 주문 메뉴 입력 + 예외 처리
+    private UserOrder getOrderMenu(int visitDate) {
         outputView.printAskMenu();
         getOrderMenu();
         outputView.printPreview(visitDate);
 
-        return menuService.getMenuScript();
+        return new UserOrder(menuService.getOrderPrice(), visitDate,
+                menuService.getAmountByMenu(MAIN),
+                menuService.getAmountByMenu(DESSERT));
     }
 
     private int getInputDate() {
@@ -83,19 +79,19 @@ public class EventController {
         }
     }
 
-    private void showUserOrder() {
-        //TODO: 주문 메뉴 출력
-        outputView.printOrdered(menuService.getMenuScript());
+    private void printOrderMenu() {
+        // 주문 메뉴 출력
+        outputView.printOrderMenu(menuService.getMenuScript());
 
-        //TODO: 할인 전 총주문 금액 출력
+        // 할인 전 총 주문 금액 출력
         outputView.printBeforeDiscountPrice(menuService.getOrderPrice());
     }
 
-    private DiscountResult discount(UserOrder userOrder) {
-        //TODO: (DiscountService) 증정 메뉴 계산 및 출력
+    private DiscountResult getDiscountResult(UserOrder userOrder) {
+        // 증정 메뉴 출력
         DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
 
-        //TODO: 혜택 내역 계산 및 출력
+        // 혜택 내역 출력
         outputView.printPresent(discountResult.getDiscountableByEvent(EventType.PRESENT));
         outputView.printDiscountDetails(discountResult);
 
@@ -103,15 +99,17 @@ public class EventController {
     }
 
     private void printDiscountDetails(UserOrder userOrder, DiscountResult discountResult) {
-        //TODO: 총 혜택 금액 출력
+        // 총 혜택 금액 출력
         outputView.printTotalDiscountPrice(discountResult);
 
-        //TODO: 할인 후 예상 결제 금액 출력
-        outputView.printExpectedPrice(userOrder.orderPrice(), discountResult);
+        // 할인 후 예상 결제 금액 출력
+        int expectedPrice = discountService.getExpectedPrice(userOrder, discountResult);
+        outputView.printExpectedPrice(expectedPrice);
     }
 
     private void printBadge(DiscountResult discountResult) {
-        //TODO: 12월 이벤트 배지 출력
-        outputView.printEventBadge(BadgeType.from(discountResult.getTotalBenefitPrice()));
+        // 12월 이벤트 배지 출력
+        int totalBenefitPrice = discountResult.getTotalBenefitPrice();
+        outputView.printEventBadge(BadgeType.from(totalBenefitPrice));
     }
 }

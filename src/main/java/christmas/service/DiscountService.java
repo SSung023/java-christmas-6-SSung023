@@ -22,14 +22,9 @@ public class DiscountService {
         DiscountResult discountResult = new DiscountResult();
 
         //TODO: if문에 해당하지 않는 경우 초기화가 되지 않아 NPE가 발생함
-//        if (canDiscount(userOrder.orderPrice())) {
-//            discountResult.addResult(PRESENT, PresentDiscount.create(userOrder.orderPrice()));
-//            discountResult.addResult(CHRISTMAS, ChristmasDiscount.create(userOrder.date()));
-//            discountResult.addResult(WEEKDAY, WeekdayDiscount.create(userOrder));
-//            discountResult.addResult(WEEKEND, WeekendDiscount.create(userOrder));
-//            discountResult.addResult(SPECIAL, SpecialDiscount.create(userOrder.date()));
-//            return discountResult;
-//        }
+        if (!canDiscount(userOrder.orderPrice())) {
+            userOrder = new UserOrder(0, 0, 0, 0);
+        }
 
         discountResult.addResult(PRESENT, PresentDiscount.create(userOrder.orderPrice()));
         discountResult.addResult(CHRISTMAS, ChristmasDiscount.create(userOrder.date()));
@@ -48,5 +43,9 @@ public class DiscountService {
 
     public int getDiscountedPrice(DiscountResult discountResult) {
         return discountResult.getTotalDiscountPrice();
+    }
+
+    public int getExpectedPrice(UserOrder userOrder, DiscountResult discountResult) {
+        return userOrder.orderPrice() - discountResult.getTotalBenefitPrice();
     }
 }

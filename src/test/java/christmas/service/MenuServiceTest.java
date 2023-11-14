@@ -1,7 +1,6 @@
 package christmas.service;
 
 import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
-import static christmas.constants.ErrorCode.MENU_OVERFLOW;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.dto.SingleOrder;
@@ -93,6 +92,6 @@ class MenuServiceTest {
         //when && then
         assertThatThrownBy(() -> menuService.order(singleOrders))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(MENU_OVERFLOW.getMessage());
+                .hasMessageContaining(INVALID_MENU_ORDER.getMessage());
     }
 }

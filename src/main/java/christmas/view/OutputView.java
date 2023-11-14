@@ -76,11 +76,8 @@ public class OutputView {
         System.out.printf("-%s원", decimalFormat.format(discountResult.getTotalDiscountPrice()));
     }
 
-    public void printExpectedPrice(int orderPrice, DiscountResult discountResult) {
+    public void printExpectedPrice(int expectedPrice) {
         System.out.println(EXPECT_PAY_HEADER.getMessage());
-
-        //TODO: 계산하는 로직이 여기 왜 있어요.. 로직 분리하기
-        int expectedPrice = orderPrice - discountResult.getTotalBenefitPrice();
         System.out.printf("%s원", decimalFormat.format(expectedPrice));
     }
 
@@ -93,7 +90,7 @@ public class OutputView {
         System.out.println(errorMessage);
     }
 
-    public void printOrdered(Map<Menu, Integer> menuScript) {
+    public void printOrderMenu(Map<Menu, Integer> menuScript) {
         StringBuilder stringBuilder = new StringBuilder(ORDER_HEADER.getMessage());
         menuScript.forEach(
                 (menu, amount) -> stringBuilder.append(String.format(MENU_FORMAT.getMessage(), menu.getName(), amount))

@@ -64,9 +64,10 @@ class OutputViewTest {
 
         //when
         DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+        int expectedPrice = discountService.getExpectedPrice(userOrder, discountResult);
 
         //then
-        outputView.printExpectedPrice(userOrder.orderPrice(), discountResult);
+        outputView.printExpectedPrice(expectedPrice);
     }
 
     @ParameterizedTest
@@ -85,7 +86,7 @@ class OutputViewTest {
         );
 
         //when && then
-        outputView.printOrdered(menuScript);
+        outputView.printOrderMenu(menuScript);
     }
 
     @Test

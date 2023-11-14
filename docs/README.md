@@ -124,17 +124,17 @@
 ### 개발 중 작성하는 리팩토링 목록
 
 -[x] IoC 컨테이너 적용하기
--[ ] Enum이 너무 우후죽순 생긴 것 같다! 정리할 수 있는 부분은 정리해보자
+-[x] Enum이 너무 우후죽순 생긴 것 같다! 정리할 수 있는 부분은 정리해보자
 -[x] InputView, OutputView에서 `readLine()`과 `System.out.print` 부분 추상화하기
 -[ ] `Supplier`를 이용하여 재입력 처리하기
 -[ ] Validator(검증)의 역할이 적절하게 분배되어 있는지 확인
     -[ ] MenuService의 validate 함수들에 대해 중복되어있는 코드 처리하기
 -[ ] MenuService의 코드가 조금 난잡한 것 같음
--[ ] Message의 %n에 대해 어떻게...처리 좀 하기
+-[x] Message의 %n에 대해 어떻게...처리 좀 하기
 -[ ] Parser에서 parseToDate, parseToAmount의 코드가 겹친다. 전달하는 예외 메세지만 다른데 방법을 찾아보자
 -[ ] DiscountResult에 너무 많은 책임이 있는 것 같다! DiscountService에게 책임을 더 부여하자.
 -[ ] 메서드, 변수명이 적절한지 확인 후 수정
--[ ] 메뉴를 잘못입력했을 때 `IndexOutOfBounds`가 발생하면서 종료된다
+-[x] 메뉴를 잘못입력했을 때 `IndexOutOfBounds`가 발생하면서 종료된다
 
 ---
 

@@ -2,6 +2,7 @@ package christmas.service;
 
 import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
 import static christmas.constants.event.EventRule.MAX_MENU_AMOUNT;
+import static christmas.constants.menu.MenuType.DRINKS;
 
 import christmas.constants.menu.Menu;
 import christmas.constants.menu.MenuType;
@@ -60,19 +61,12 @@ public class MenuService {
     }
 
     private void validateOnlyDrink(List<SingleOrder> singleOrders) {
-        List<Menu> menus = singleOrders.stream()
+        int drinks = (int) singleOrders.stream()
                 .map(singleOrder -> Menu.from(singleOrder.menu()))
-                .toList();
-
-        int drinks = (int) menus.stream()
-                .filter(menu -> menu.getMenuType() == MenuType.DRINKS)
+                .filter(menu -> menu.getMenuType() == DRINKS)
                 .count();
 
-        int nonDrinks = (int) menus.stream()
-                .filter(menu -> menu.getMenuType() != MenuType.DRINKS)
-                .count();
-
-        if (drinks != 0 && nonDrinks == 0) {
+        if (drinks > 0 && drinks == singleOrders.size()) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }

@@ -58,8 +58,8 @@ public class OutputView {
 
     //TODO: 코드 길이를 줄여보자
     public void printDiscountDetails(DiscountResult discountResult) {
-        StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage());
-        stringBuilder.append(NEW_LINE.getMessage());
+        StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage())
+                .append(NEW_LINE.getMessage());
 
         if (discountResult.isEventNotApplied()) {
             stringBuilder.append(NONE.getMessage());

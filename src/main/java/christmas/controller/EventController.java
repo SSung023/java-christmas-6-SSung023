@@ -103,6 +103,9 @@ public class EventController {
     private void printDiscountDetails(UserOrder userOrder, DiscountResult discountResult) {
         //TODO: 총 혜택 금액 출력
         outputView.printTotalDiscountPrice(discountResult);
+
+        //TODO: 할인 후 예상 결제 금액 출력
+        outputView.printExpectedPrice(userOrder.orderPrice(), discountResult);
     }
 
 }

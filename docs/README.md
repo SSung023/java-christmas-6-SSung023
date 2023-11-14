@@ -123,9 +123,9 @@
 
 ### 개발 중 작성하는 리팩토링 목록
 
--[ ] IoC 컨테이너 적용하기
+-[x] IoC 컨테이너 적용하기
 -[ ] Enum이 너무 우후죽순 생긴 것 같다! 정리할 수 있는 부분은 정리해보자
--[ ] InputView, OutputView에서 `readLine()`과 `System.out.print` 부분 추상화하기
+-[x] InputView, OutputView에서 `readLine()`과 `System.out.print` 부분 추상화하기
 -[ ] `Supplier`를 이용하여 재입력 처리하기
 -[ ] Validator(검증)의 역할이 적절하게 분배되어 있는지 확인
     -[ ] MenuService의 validate 함수들에 대해 중복되어있는 코드 처리하기

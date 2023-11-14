@@ -1,8 +1,12 @@
 package christmas.controller;
 
+import static christmas.constants.menu.MenuType.DESSERT;
+import static christmas.constants.menu.MenuType.MAIN;
+
 import christmas.constants.menu.Menu;
 import christmas.dto.SingleOrder;
 import christmas.dto.UserOrder;
+import christmas.model.DiscountResult;
 import christmas.service.DiscountService;
 import christmas.service.MenuService;
 import christmas.view.InputView;
@@ -28,6 +32,12 @@ public class EventController {
     public void run() {
         int visitDate = getVisitDate();
         getOrderMenu(visitDate);
+        userOrder = new UserOrder(menuService.getOrderPrice(), visitDate,
+                menuService.getAmountByMenu(MAIN),
+                menuService.getAmountByMenu(DESSERT));
+
+        showUserOrder();
+        discount(userOrder);
     }
 
     private int getVisitDate() {
@@ -67,5 +77,22 @@ public class EventController {
                 outputView.printError(e.getMessage());
             }
         }
+    }
+
+    private void showUserOrder() {
+        //TODO: 주문 메뉴 출력
+        outputView.printOrdered(menuService.getMenuScript());
+
+        //TODO: 할인 전 총주문 금액 출력
+        outputView.printBeforeDiscountPrice(menuService.getOrderPrice());
+    }
+
+    private DiscountResult discount(UserOrder userOrder) {
+        //TODO: (DiscountService) 증정 메뉴 계산 및 출력
+        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+
+        //TODO: 혜택 내역 계산 및 출력
+
+        return discountResult;
     }
 }

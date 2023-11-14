@@ -29,6 +29,10 @@ public class DiscountResult {
         return discountPrice;
     }
 
+    public Discountable getDiscountableByEvent(EventType eventType) {
+        return this.discountResult.get(eventType);
+    }
+
     public int getTotalBenefitPrice() {
         return discountResult.entrySet()
                 .stream()

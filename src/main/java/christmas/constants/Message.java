@@ -10,9 +10,9 @@ public enum Message {
     TOTAL_HEADER("<할인 전 총주문 금액>"),
     PRESENT_HEADER(String.format("%n%n<증정 메뉴>")),
     DISCOUNT_HEADER(String.format("%n<혜택 내역>%n")),
-    TOTAL_DISCOUNT_HEADER("<총혜택 금액>"),
-    EXPECT_PAY_HEADER("<할인 후 예상 결제 금액>"),
-    EVENT_BADGE("<12월 이벤트 배지>"),
+    TOTAL_DISCOUNT_HEADER(String.format("%n<총혜택 금액>")),
+    EXPECT_PAY_HEADER(String.format("%n%n<할인 후 예상 결제 금액>")),
+    EVENT_BADGE(String.format("%n%n<12월 이벤트 배지>")),
     NONE("없음");
 
     private final String message;

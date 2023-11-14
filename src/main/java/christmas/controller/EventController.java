@@ -3,6 +3,7 @@ package christmas.controller;
 import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.MAIN;
 
+import christmas.constants.event.EventType;
 import christmas.constants.menu.Menu;
 import christmas.dto.SingleOrder;
 import christmas.dto.UserOrder;
@@ -37,7 +38,7 @@ public class EventController {
                 menuService.getAmountByMenu(DESSERT));
 
         showUserOrder();
-        discount(userOrder);
+        DiscountResult discount = discount(userOrder);
     }
 
     private int getVisitDate() {
@@ -92,6 +93,8 @@ public class EventController {
         DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
 
         //TODO: 혜택 내역 계산 및 출력
+        outputView.printPresent(discountResult.getDiscountableByEvent(EventType.PRESENT));
+        outputView.printDiscountDetails(discountResult);
 
         return discountResult;
     }

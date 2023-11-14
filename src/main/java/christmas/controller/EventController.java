@@ -3,6 +3,7 @@ package christmas.controller;
 import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.MAIN;
 
+import christmas.constants.event.BadgeType;
 import christmas.constants.event.EventType;
 import christmas.constants.menu.Menu;
 import christmas.dto.SingleOrder;
@@ -40,6 +41,7 @@ public class EventController {
         showUserOrder();
         DiscountResult discount = discount(userOrder);
         printDiscountDetails(userOrder, discount);
+        printBadge(discount);
     }
 
     private int getVisitDate() {
@@ -108,4 +110,8 @@ public class EventController {
         outputView.printExpectedPrice(userOrder.orderPrice(), discountResult);
     }
 
+    private void printBadge(DiscountResult discountResult) {
+        //TODO: 12월 이벤트 배지 출력
+        outputView.printEventBadge(BadgeType.from(discountResult.getTotalBenefitPrice()));
+    }
 }

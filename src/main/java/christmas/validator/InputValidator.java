@@ -8,7 +8,7 @@ import christmas.util.Parser;
 
 public class InputValidator {
     public void validateDate(String input) {
-        int parsed = Parser.parseToInt(input);
+        int parsed = Parser.parseToDate(input);
         if (parsed < EVENT_START.getValue() || EVENT_END.getValue() < parsed) {
             throw new IllegalArgumentException(INVALID_DATE.getMessage());
         }

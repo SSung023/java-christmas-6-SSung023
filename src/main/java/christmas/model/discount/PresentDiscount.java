@@ -30,8 +30,4 @@ public class PresentDiscount implements Discountable<Integer> {
     public int getDiscountPrice() {
         return CHAMPAGNE.getPrice() * amount;
     }
-
-    public int getAmount() {
-        return amount;
-    }
 }

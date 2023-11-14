@@ -1,5 +1,6 @@
 package christmas.view;
 
+import static christmas.constants.Message.ASK_MENU;
 import static christmas.constants.Message.ASK_VISIT_DATE;
 import static christmas.constants.Message.DISCOUNT_HEADER;
 import static christmas.constants.Message.EVENT_BADGE;
@@ -7,14 +8,19 @@ import static christmas.constants.Message.EXPECT_PAY_HEADER;
 import static christmas.constants.Message.GREETING;
 import static christmas.constants.Message.MENU_FORMAT;
 import static christmas.constants.Message.NONE;
+import static christmas.constants.Message.ORDER_HEADER;
 import static christmas.constants.Message.PRESENT_HEADER;
+import static christmas.constants.Message.PREVIEW;
 import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
+import static christmas.constants.Message.TOTAL_HEADER;
 import static christmas.constants.menu.Menu.CHAMPAGNE;
 
 import christmas.constants.event.BadgeType;
+import christmas.constants.menu.Menu;
 import christmas.model.DiscountResult;
-import christmas.model.discount.PresentDiscount;
+import christmas.model.discount.Discountable;
 import java.text.DecimalFormat;
+import java.util.Map;
 
 public class OutputView {
     private final DecimalFormat decimalFormat;
@@ -31,13 +37,17 @@ public class OutputView {
         System.out.println(ASK_VISIT_DATE.getMessage());
     }
 
-    public void printPresent(PresentDiscount presentDiscount) {
+    public void printAskMenu() {
+        System.out.println(ASK_MENU.getMessage());
+    }
+
+    public void printPresent(Discountable presentDiscount) {
         System.out.println(PRESENT_HEADER.getMessage());
-        if (presentDiscount.getAmount() == 0) {
+        if (presentDiscount.getDiscountPrice() == 0) {
             System.out.println(NONE.getMessage());
             return;
         }
-        System.out.printf(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), presentDiscount.getAmount());
+        System.out.printf(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), 1);
     }
 
     //TODO: DiscountResult에서 entry를 받아오는게 아쉽다... 코드의 길이를 더 줄여보자
@@ -45,7 +55,8 @@ public class OutputView {
         StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage());
 
         if (discountResult.isEventNotApplied()) {
-            System.out.println(NONE.getMessage());
+            stringBuilder.append(NONE.getMessage());
+            System.out.println(stringBuilder);
             return;
         }
 
@@ -80,5 +91,22 @@ public class OutputView {
 
     public void printError(String errorMessage) {
         System.out.println(errorMessage);
+    }
+
+    public void printOrdered(Map<Menu, Integer> menuScript) {
+        StringBuilder stringBuilder = new StringBuilder(ORDER_HEADER.getMessage());
+        menuScript.forEach(
+                (menu, amount) -> stringBuilder.append(String.format(MENU_FORMAT.getMessage(), menu.getName(), amount))
+        );
+        System.out.println(stringBuilder);
+    }
+
+    public void printBeforeDiscountPrice(int orderPrice) {
+        System.out.println(TOTAL_HEADER.getMessage());
+        System.out.printf("%s원", decimalFormat.format(orderPrice));
+    }
+
+    public void printPreview(int date) {
+        System.out.printf(PREVIEW.getMessage(), date);
     }
 }

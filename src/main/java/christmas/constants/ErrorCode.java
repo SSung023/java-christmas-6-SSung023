@@ -2,8 +2,9 @@ package christmas.constants;
 
 public enum ErrorCode {
     PREFIX("[ERROR] "),
-    NOT_INTEGER("입력한 값이 정수가 아닙니다. 다시 입력해주세요."),
-    INVALID_DATE("방문 날짜가 유효하지 않습니다. 다시 입력해주세요.");
+    INVALID_DATE("유효하지 않은 날짜입니다. 다시 입력해 주세요."),
+    INVALID_MENU_ORDER("유효하지 않은 주문입니다. 다시 입력해 주세요."),
+    MENU_OVERFLOW("메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다.");
 
     private final String message;
 

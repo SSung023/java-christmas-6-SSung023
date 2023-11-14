@@ -1,9 +1,13 @@
 package christmas.constants.menu;
 
+import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
 import static christmas.constants.menu.MenuType.APPETIZER;
 import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.DRINKS;
 import static christmas.constants.menu.MenuType.MAIN;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 public enum Menu {
     MUSHROOM_SOUP(APPETIZER, "양송이수프", 6000),
@@ -29,6 +33,12 @@ public enum Menu {
         this.price = price;
     }
 
+    public static Menu from(String input) {
+        return Arrays.stream(values())
+                .filter(menu -> Objects.equals(menu.name, input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_MENU_ORDER.getMessage()));
+    }
 
     public MenuType getMenuType() {
         return menuType;

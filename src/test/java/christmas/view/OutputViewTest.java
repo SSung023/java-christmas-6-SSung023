@@ -1,10 +1,12 @@
 package christmas.view;
 
 import christmas.constants.event.BadgeType;
+import christmas.constants.menu.Menu;
 import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
 import christmas.model.discount.PresentDiscount;
 import christmas.service.DiscountService;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -72,6 +74,28 @@ class OutputViewTest {
     @EnumSource(value = BadgeType.class)
     public void eventBadgePrintTest(BadgeType badgeType) {
         outputView.printEventBadge(badgeType);
+    }
+
+    @Test
+    @DisplayName("주문 내역 출력 테스트")
+    public void orderedMenuPrintTest() {
+        //given
+        Map<Menu, Integer> menuScript = Map.of(
+                Menu.TAPAS, 1, Menu.ZERO_COLA, 1
+        );
+
+        //when && then
+        outputView.printOrdered(menuScript);
+    }
+
+    @Test
+    @DisplayName("할인 전 총주문 금액 테스트")
+    public void printBeforeDiscountTest() {
+        //given
+        int orderPrice = 8500;
+
+        //when && then
+        outputView.printBeforeDiscountPrice(orderPrice);
 
     }
 }

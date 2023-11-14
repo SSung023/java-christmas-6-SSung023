@@ -21,14 +21,21 @@ public class DiscountService {
     public DiscountResult calculateDiscountInfo(UserOrder userOrder) {
         DiscountResult discountResult = new DiscountResult();
 
-        if (canDiscount(userOrder.orderPrice())) {
-            discountResult.addResult(PRESENT, PresentDiscount.create(userOrder.orderPrice()));
-            discountResult.addResult(CHRISTMAS, ChristmasDiscount.create(userOrder.date()));
-            discountResult.addResult(WEEKDAY, WeekdayDiscount.create(userOrder));
-            discountResult.addResult(WEEKEND, WeekendDiscount.create(userOrder));
-            discountResult.addResult(SPECIAL, SpecialDiscount.create(userOrder.date()));
-        }
+        //TODO: if문에 해당하지 않는 경우 초기화가 되지 않아 NPE가 발생함
+//        if (canDiscount(userOrder.orderPrice())) {
+//            discountResult.addResult(PRESENT, PresentDiscount.create(userOrder.orderPrice()));
+//            discountResult.addResult(CHRISTMAS, ChristmasDiscount.create(userOrder.date()));
+//            discountResult.addResult(WEEKDAY, WeekdayDiscount.create(userOrder));
+//            discountResult.addResult(WEEKEND, WeekendDiscount.create(userOrder));
+//            discountResult.addResult(SPECIAL, SpecialDiscount.create(userOrder.date()));
+//            return discountResult;
+//        }
 
+        discountResult.addResult(PRESENT, PresentDiscount.create(userOrder.orderPrice()));
+        discountResult.addResult(CHRISTMAS, ChristmasDiscount.create(userOrder.date()));
+        discountResult.addResult(WEEKDAY, WeekdayDiscount.create(userOrder));
+        discountResult.addResult(WEEKEND, WeekendDiscount.create(userOrder));
+        discountResult.addResult(SPECIAL, SpecialDiscount.create(userOrder.date()));
         return discountResult;
     }
 

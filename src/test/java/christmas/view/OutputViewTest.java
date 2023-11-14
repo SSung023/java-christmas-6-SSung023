@@ -6,6 +6,8 @@ import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
 import christmas.model.discount.PresentDiscount;
 import christmas.service.DiscountService;
+import christmas.view.output.ConsoleWriter;
+import christmas.view.output.OutputView;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class OutputViewTest {
-    private final OutputView outputView = new OutputView();
+    private final OutputView outputView = new OutputView(new ConsoleWriter());
     private final DiscountService discountService = new DiscountService();
 
     @Test

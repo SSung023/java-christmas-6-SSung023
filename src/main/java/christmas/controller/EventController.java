@@ -10,8 +10,8 @@ import christmas.dto.UserOrder;
 import christmas.model.DiscountResult;
 import christmas.service.DiscountService;
 import christmas.service.MenuService;
-import christmas.view.InputView;
-import christmas.view.OutputView;
+import christmas.view.input.InputView;
+import christmas.view.output.OutputView;
 import java.util.List;
 
 public class EventController {
@@ -37,6 +37,7 @@ public class EventController {
         printDiscountDetails(userOrder, discountResult);
 
         printBadge(discountResult);
+        inputView.close();
     }
 
     private int getVisitDate() {

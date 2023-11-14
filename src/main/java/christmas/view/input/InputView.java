@@ -1,15 +1,16 @@
-package christmas.view;
+package christmas.view.input;
 
-import camp.nextstep.edu.missionutils.Console;
 import christmas.dto.SingleOrder;
 import christmas.util.Parser;
 import christmas.validator.InputValidator;
 import java.util.List;
 
 public class InputView {
+    private final Reader reader;
     private final InputValidator inputValidator;
 
-    public InputView(InputValidator inputValidator) {
+    public InputView(Reader reader, InputValidator inputValidator) {
+        this.reader = reader;
         this.inputValidator = inputValidator;
     }
 
@@ -32,7 +33,11 @@ public class InputView {
                 .toList();
     }
 
+    public void close() {
+        reader.close();
+    }
+
     private String getInput() {
-        return Console.readLine().trim();
+        return reader.readLine();
     }
 }

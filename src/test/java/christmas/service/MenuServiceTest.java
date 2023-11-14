@@ -1,6 +1,9 @@
 package christmas.service;
 
 import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
+import static christmas.constants.menu.MenuType.DESSERT;
+import static christmas.constants.menu.MenuType.MAIN;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.dto.SingleOrder;
@@ -38,17 +41,6 @@ class MenuServiceTest {
         assertThatThrownBy(() -> menuService.order(singleOrders))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(INVALID_MENU_ORDER.getMessage());
-    }
-
-    @Test
-    @DisplayName("메뉴 주문 정보가 전달되었을 때, 메뉴 형식이 예시와 다른 경우 예외가 발생한다.")
-    public void should_throwException_when_invalidFormat() {
-        //given
-
-        //when
-
-        //then
-
     }
 
     @Test
@@ -93,5 +85,42 @@ class MenuServiceTest {
         assertThatThrownBy(() -> menuService.order(singleOrders))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(INVALID_MENU_ORDER.getMessage());
+    }
+
+    @Test
+    @DisplayName("메뉴를 주문했을 때, 메인 메뉴의 개수가 몇개인지 확인할 수 있다.")
+    public void should_checkMainAmount_when_orderMenu() {
+        //given
+        List<SingleOrder> orders = List.of(
+                new SingleOrder("티본스테이크", 1),
+                new SingleOrder("바비큐립", 2),
+                new SingleOrder("초코케이크", 2)
+        );
+        menuService.order(orders);
+
+        //when
+        int mainAmount = menuService.getAmountByMenu(MAIN);
+
+        //then
+        assertThat(mainAmount).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("메뉴를 주문했을 때, 디저트 메뉴의 개수가 몇개인지 확인할 수 있다.")
+    public void should_checkDessertAmount_when_orderMenu() {
+        //given
+        List<SingleOrder> orders = List.of(
+                new SingleOrder("티본스테이크", 1),
+                new SingleOrder("바비큐립", 1),
+                new SingleOrder("초코케이크", 2),
+                new SingleOrder("아이스크림", 1)
+        );
+        menuService.order(orders);
+
+        //when
+        int dessertAmount = menuService.getAmountByMenu(DESSERT);
+
+        //then
+        assertThat(dessertAmount).isEqualTo(3);
     }
 }

@@ -87,10 +87,11 @@ public class MenuService {
     }
 
     public int getAmountByMenu(MenuType menuType) {
-        return (int) menuScript.keySet()
+        return menuScript.keySet()
                 .stream()
                 .filter(target -> target.getMenuType() == menuType)
-                .count();
+                .mapToInt(menuScript::get)
+                .sum();
     }
 
     public Map<Menu, Integer> getMenuScript() {

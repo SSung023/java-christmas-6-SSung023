@@ -39,6 +39,7 @@ public class EventController {
 
         showUserOrder();
         DiscountResult discount = discount(userOrder);
+        printDiscountDetails(userOrder, discount);
     }
 
     private int getVisitDate() {
@@ -98,4 +99,10 @@ public class EventController {
 
         return discountResult;
     }
+
+    private void printDiscountDetails(UserOrder userOrder, DiscountResult discountResult) {
+        //TODO: 총 혜택 금액 출력
+        outputView.printTotalDiscountPrice(discountResult);
+    }
+
 }

@@ -1,8 +1,8 @@
 package christmas.service;
 
-import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
 import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.MAIN;
+import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

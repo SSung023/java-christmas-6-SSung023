@@ -1,8 +1,8 @@
 package christmas.service;
 
-import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
 import static christmas.constants.event.EventRule.MAX_MENU_AMOUNT;
 import static christmas.constants.menu.MenuType.DRINKS;
+import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 
 import christmas.constants.menu.Menu;
 import christmas.constants.menu.MenuType;

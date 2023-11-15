@@ -1,9 +1,9 @@
 package christmas.validator;
 
-import static christmas.constants.ErrorCode.INVALID_DATE;
-import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
 import static christmas.constants.event.EventRule.EVENT_END;
 import static christmas.constants.event.EventRule.EVENT_START;
+import static christmas.exception.ErrorCode.INVALID_DATE;
+import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 
 import christmas.util.Parser;
 

@@ -21,7 +21,6 @@ public class DiscountService {
     public DiscountResult calculateDiscountInfo(UserOrder userOrder) {
         DiscountResult discountResult = new DiscountResult();
 
-        //TODO: if문에 해당하지 않는 경우 초기화가 되지 않아 NPE가 발생함
         if (!canDiscount(userOrder.orderPrice())) {
             userOrder = new UserOrder(0, 0, 0, 0);
         }

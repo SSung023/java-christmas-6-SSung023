@@ -1,7 +1,7 @@
 package christmas.util;
 
-import static christmas.constants.ErrorCode.INVALID_DATE;
-import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
+import static christmas.exception.ErrorCode.INVALID_DATE;
+import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 
 import java.util.List;
 

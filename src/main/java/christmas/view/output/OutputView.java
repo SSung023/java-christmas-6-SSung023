@@ -57,7 +57,6 @@ public class OutputView {
         writer.printNewLine(1);
     }
 
-    //TODO: 코드 길이를 줄여보자
     public void printDiscountDetails(DiscountResult discountResult) {
         StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage())
                 .append(NEW_LINE.getMessage());

@@ -1,10 +1,10 @@
 package christmas.constants.menu;
 
-import static christmas.constants.ErrorCode.INVALID_MENU_ORDER;
 import static christmas.constants.menu.MenuType.APPETIZER;
 import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.DRINKS;
 import static christmas.constants.menu.MenuType.MAIN;
+import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 
 import java.util.Arrays;
 import java.util.Objects;

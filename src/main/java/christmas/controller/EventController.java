@@ -7,6 +7,7 @@ import christmas.constants.event.BadgeType;
 import christmas.constants.event.EventType;
 import christmas.dto.SingleOrder;
 import christmas.dto.UserOrder;
+import christmas.exception.RetryHandler;
 import christmas.model.DiscountResult;
 import christmas.service.DiscountService;
 import christmas.service.MenuService;
@@ -19,13 +20,15 @@ public class EventController {
     private final MenuService menuService;
     private final InputView inputView;
     private final OutputView outputView;
+    private final RetryHandler retryHandler;
 
     public EventController(DiscountService discountService, MenuService menuService, InputView inputView,
-                           OutputView outputView) {
+                           OutputView outputView, RetryHandler retryHandler) {
         this.discountService = discountService;
         this.menuService = menuService;
         this.inputView = inputView;
         this.outputView = outputView;
+        this.retryHandler = retryHandler;
     }
 
     public void run() {
@@ -44,40 +47,23 @@ public class EventController {
         outputView.printGreeting();
         outputView.printAskVisitDate();
 
-        int visitDate = getInputDate();
-        return visitDate;
+        return retryHandler.execute(inputView::askVisitDate, IllegalArgumentException.class);
     }
 
     private UserOrder getOrderMenu(int visitDate) {
         outputView.printAskMenu();
-        getOrderMenu();
+        UserOrder userOrder = retryHandler.execute(() -> order(visitDate), IllegalArgumentException.class);
         outputView.printPreview(visitDate);
 
+        return userOrder;
+    }
+
+    private UserOrder order(int visitDate) {
+        List<SingleOrder> singleOrders = inputView.askOrderMenu();
+        menuService.order(singleOrders);
         return new UserOrder(menuService.getOrderPrice(), visitDate,
                 menuService.getAmountByMenu(MAIN),
                 menuService.getAmountByMenu(DESSERT));
-    }
-
-    private int getInputDate() {
-        while (true) {
-            try {
-                return inputView.askVisitDate();
-            } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-            }
-        }
-    }
-
-    private void getOrderMenu() {
-        while (true) {
-            try {
-                List<SingleOrder> singleOrders = inputView.askOrderMenu();
-                menuService.order(singleOrders);
-                return;
-            } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-            }
-        }
     }
 
     private void printOrderMenu() {
@@ -101,7 +87,7 @@ public class EventController {
 
     private void printDiscountDetails(UserOrder userOrder, DiscountResult discountResult) {
         // 총 혜택 금액 출력
-        outputView.printTotalDiscountPrice(discountResult);
+        outputView.printTotalDiscountPrice(discountResult.getTotalDiscountPrice());
 
         // 할인 후 예상 결제 금액 출력
         int expectedPrice = discountService.getExpectedPrice(userOrder, discountResult);
@@ -110,7 +96,8 @@ public class EventController {
 
     private void printBadge(DiscountResult discountResult) {
         // 12월 이벤트 배지 출력
-        int totalBenefitPrice = discountResult.getTotalBenefitPrice();
-        outputView.printEventBadge(BadgeType.from(totalBenefitPrice));
+        int totalDiscountPrice = discountResult.getTotalDiscountPrice();
+//        int totalBenefitPrice = discountResult.getTotalBenefitPrice();
+        outputView.printEventBadge(BadgeType.from(totalDiscountPrice));
     }
 }

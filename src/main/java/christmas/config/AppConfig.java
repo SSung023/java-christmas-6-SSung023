@@ -1,7 +1,7 @@
 package christmas.config;
 
 import christmas.controller.EventController;
-import christmas.exception.ExceptionHandler;
+import christmas.exception.RetryHandler;
 import christmas.service.DiscountService;
 import christmas.service.MenuService;
 import christmas.validator.InputValidator;
@@ -18,7 +18,7 @@ public class AppConfig {
     private DiscountService discountService;
     private MenuService menuService;
     private InputValidator inputValidator;
-    private ExceptionHandler exceptionHandler;
+    private RetryHandler retryHandler;
     private InputView inputView;
     private OutputView outputView;
     private Reader reader;
@@ -53,11 +53,11 @@ public class AppConfig {
         return menuService;
     }
 
-    public ExceptionHandler exceptionHandler() {
-        if (exceptionHandler == null) {
-            exceptionHandler = new ExceptionHandler();
+    public RetryHandler exceptionHandler() {
+        if (retryHandler == null) {
+            retryHandler = new RetryHandler(outputView());
         }
-        return exceptionHandler;
+        return retryHandler;
     }
 
     public InputView inputView() {

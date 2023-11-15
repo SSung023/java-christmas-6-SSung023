@@ -110,14 +110,14 @@
 
 -[ ] 3주차 공통피드백 지키기!
 -[ ] `Integer.parseInt()`를 사용하면 정수의 범위가 아닐 때에도 예외가 발생하는데, 예외 메시지르 조금 더 꼼꼼하게 챙기자
--[ ] Enum에서 문자열을 합칠 때 `+`보다는, `String.format()`을 사용하자
+-[x] Enum에서 문자열을 합칠 때 `+`보다는, `String.format()`을 사용하자
 -[ ] `System.lineSeperator()`와 `String.format("%n")`은 같은 역할을 한다. 활용해보자!
 -[ ] 요구사항을 꼼꼼하게 읽자. (세자리마다 쉼표를 넣어준다던지...)
 -[ ] 상수를 enum으로 뺐으면 이를 활용하자! 매직 넘버의 사용을 줄이자! 확장성을 고려한 구조를 만들자!
 -[ ] 예외를 다시 받는 방법으로 재귀를 사용했는데, 메모리가 터질 가능성이 있다. `Supplier`를 도입해보자.
 -[ ] 검증(Validate)과 파싱(Parsing)의 로직을 어디에 두면 좋을까? 고민해보자.
 -[ ] 디미터의 법칙!
--[ ] `Console.close()`를 통해 사용 완료한 콘솔을 닫아주자
+-[x] `Console.close()`를 통해 사용 완료한 콘솔을 닫아주자
 
 ---
 
@@ -126,15 +126,16 @@
 -[x] IoC 컨테이너 적용하기
 -[x] Enum이 너무 우후죽순 생긴 것 같다! 정리할 수 있는 부분은 정리해보자
 -[x] InputView, OutputView에서 `readLine()`과 `System.out.print` 부분 추상화하기
--[ ] `Supplier`를 이용하여 재입력 처리하기
+-[x] `Supplier`를 이용하여 재입력 처리하기
 -[ ] Validator(검증)의 역할이 적절하게 분배되어 있는지 확인
     -[ ] MenuService의 validate 함수들에 대해 중복되어있는 코드 처리하기
 -[ ] MenuService의 코드가 조금 난잡한 것 같음
 -[x] Message의 %n에 대해 어떻게...처리 좀 하기
--[ ] Parser에서 parseToDate, parseToAmount의 코드가 겹친다. 전달하는 예외 메세지만 다른데 방법을 찾아보자
+-[ ] Parser에서 parseToDate, parseToAmount의 코드가 겹친다. 전달하는 예외 메세지만 다른데... 방법을 찾아보자.
 -[ ] DiscountResult에 너무 많은 책임이 있는 것 같다! DiscountService에게 책임을 더 부여하자.
 -[ ] 메서드, 변수명이 적절한지 확인 후 수정
--[x] 메뉴를 잘못입력했을 때 `IndexOutOfBounds`가 발생하면서 종료된다
+-[x] 메뉴를 잘못입력했을 때 `IndexOutOfBounds`가 발생하면서 종료된다.
+-[ ] OutputView에서 formatting을 하면서 겹치는 코드가 곳곳에 있다. 수정하자!
 
 ---
 

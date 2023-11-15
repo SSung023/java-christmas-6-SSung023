@@ -12,7 +12,7 @@ import static christmas.constants.Message.NEW_LINE;
 import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.ORDER_HEADER;
 import static christmas.constants.Message.PRESENT_HEADER;
-import static christmas.constants.Message.PREVIEW;
+import static christmas.constants.Message.PREVIEW_HEADER;
 import static christmas.constants.Message.PRICE_FORMAT;
 import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
 import static christmas.constants.Message.TOTAL_HEADER;
@@ -47,16 +47,38 @@ public class OutputView {
         writer.printLine(ASK_MENU.getMessage());
     }
 
-    public void printPresent(Discountable presentDiscount) {
+    public void printPreview(int date) {
+        writer.printFormat(PREVIEW_HEADER.getMessage(), date);
         writer.printNewLine(2);
-        writer.printLine(PRESENT_HEADER.getMessage());
+    }
+
+    public void printOrderMenu(Map<Menu, Integer> menuScript) {
+        StringBuilder stringBuilder = new StringBuilder(ORDER_HEADER.getMessage())
+                .append(NEW_LINE.getMessage());
+        menuScript.forEach(
+                (menu, amount) -> stringBuilder.append(String.format(MENU_FORMAT.getMessage(), menu.getName(), amount))
+        );
+        writer.printLine(stringBuilder.toString());
+    }
+
+    public void printBeforeDiscountPrice(int orderPrice) {
+        writer.printLine(TOTAL_HEADER.getMessage());
+        writer.printFormat(PRICE_FORMAT.getMessage(), decimalFormat.format(orderPrice));
+        writer.printNewLine(2);
+    }
+
+    public void printPresent(Discountable presentDiscount) {
+        StringBuilder stringBuilder = new StringBuilder(PRESENT_HEADER.getMessage())
+                .append(NEW_LINE.getMessage());
+
         if (presentDiscount.getDiscountPrice() == 0) {
-            writer.printLine(NONE.getMessage());
-            writer.printNewLine(1);
+            stringBuilder.append(NONE.getMessage())
+                    .append(NEW_LINE.getMessage());
+            writer.printLine(stringBuilder.toString());
             return;
         }
-        writer.printFormat(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), 1);
-        writer.printNewLine(1);
+        stringBuilder.append(String.format(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), 1));
+        writer.printLine(stringBuilder.toString());
     }
 
     public void printDiscountDetails(DiscountResult discountResult) {
@@ -64,9 +86,9 @@ public class OutputView {
                 .append(NEW_LINE.getMessage());
 
         if (discountResult.isEventNotApplied()) {
-            stringBuilder.append(NONE.getMessage());
+            stringBuilder.append(NONE.getMessage())
+                    .append(NEW_LINE.getMessage());
             writer.printLine(stringBuilder.toString());
-            writer.printNewLine(1);
             return;
         }
 
@@ -81,15 +103,17 @@ public class OutputView {
                 decimalFormat.format(priceByDiscount));
     }
 
-    public void printTotalDiscountPrice(int totalDiscountPrice) {
-        writer.printLine(TOTAL_DISCOUNT_HEADER.getMessage());
-
-        String format = PRICE_FORMAT.getMessage();
-        if (totalDiscountPrice != 0) {
-            format = "-" + format;
+    public void printTotalBenefitPrice(int totalBenefitPrice) {
+        StringBuilder stringBuilder = new StringBuilder(TOTAL_DISCOUNT_HEADER.getMessage())
+                .append(NEW_LINE.getMessage());
+        if (totalBenefitPrice != 0) {
+            stringBuilder.append("-");
         }
 
-        writer.printFormat(format, decimalFormat.format(totalDiscountPrice));
+        stringBuilder.append(
+                String.format(PRICE_FORMAT.getMessage(), decimalFormat.format(totalBenefitPrice))
+        );
+        writer.printFormat(stringBuilder.toString());
         writer.printNewLine(2);
     }
 
@@ -106,24 +130,5 @@ public class OutputView {
 
     public void printError(String errorMessage) {
         writer.printLine(errorMessage);
-    }
-
-    public void printOrderMenu(Map<Menu, Integer> menuScript) {
-        StringBuilder stringBuilder = new StringBuilder(ORDER_HEADER.getMessage());
-        stringBuilder.append(NEW_LINE.getMessage());
-        menuScript.forEach(
-                (menu, amount) -> stringBuilder.append(String.format(MENU_FORMAT.getMessage(), menu.getName(), amount))
-        );
-        writer.printLine(stringBuilder.toString());
-    }
-
-    public void printBeforeDiscountPrice(int orderPrice) {
-        writer.printLine(TOTAL_HEADER.getMessage());
-        writer.printFormat(PRICE_FORMAT.getMessage(), decimalFormat.format(orderPrice));
-    }
-
-    public void printPreview(int date) {
-        writer.printFormat(PREVIEW.getMessage(), date);
-        writer.printNewLine(2);
     }
 }

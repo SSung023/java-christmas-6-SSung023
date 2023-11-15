@@ -29,11 +29,12 @@ public class DiscountResult {
         return discountPrice;
     }
 
+    //TODO: 굳이?
     public Discountable getDiscountableByEvent(EventType eventType) {
         return this.discountResult.get(eventType);
     }
 
-    public int getTotalBenefitPrice() {
+    public int getTotalDiscountPrice() {
         return discountResult.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey() != PRESENT)
@@ -41,7 +42,7 @@ public class DiscountResult {
                 .sum();
     }
 
-    public int getTotalDiscountPrice() {
+    public int getTotalBenefitPrice() {
         return discountResult.values()
                 .stream()
                 .mapToInt(Discountable::getDiscountPrice)

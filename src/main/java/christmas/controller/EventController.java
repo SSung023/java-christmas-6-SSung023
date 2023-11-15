@@ -34,10 +34,10 @@ public class EventController {
     public void run() {
         int visitDate = getVisitDate();
         UserOrder userOrder = getOrderMenu(visitDate);
-        printOrderMenu();
+        printOrderInformation();
 
         DiscountResult discountResult = getDiscountResult(userOrder);
-        printDiscountDetails(userOrder, discountResult);
+        printEventDetails(userOrder, discountResult);
 
         printBadge(discountResult);
         inputView.close();
@@ -52,13 +52,13 @@ public class EventController {
 
     private UserOrder getOrderMenu(int visitDate) {
         outputView.printAskMenu();
-        UserOrder userOrder = retryHandler.execute(() -> order(visitDate), IllegalArgumentException.class);
+        UserOrder userOrder = retryHandler.execute(() -> getUserOrder(visitDate), IllegalArgumentException.class);
         outputView.printPreview(visitDate);
 
         return userOrder;
     }
 
-    private UserOrder order(int visitDate) {
+    private UserOrder getUserOrder(int visitDate) {
         List<SingleOrder> singleOrders = inputView.askOrderMenu();
         menuService.order(singleOrders);
         return new UserOrder(menuService.getOrderPrice(), visitDate,
@@ -66,38 +66,29 @@ public class EventController {
                 menuService.getAmountByMenu(DESSERT));
     }
 
-    private void printOrderMenu() {
-        // 주문 메뉴 출력
+    private void printOrderInformation() {
         outputView.printOrderMenu(menuService.getMenuScript());
-
-        // 할인 전 총 주문 금액 출력
         outputView.printBeforeDiscountPrice(menuService.getOrderPrice());
     }
 
     private DiscountResult getDiscountResult(UserOrder userOrder) {
-        // 증정 메뉴 출력
         DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
 
-        // 혜택 내역 출력
         outputView.printPresent(discountResult.getDiscountableByEvent(EventType.PRESENT));
         outputView.printDiscountDetails(discountResult);
 
         return discountResult;
     }
 
-    private void printDiscountDetails(UserOrder userOrder, DiscountResult discountResult) {
-        // 총 혜택 금액 출력
-        outputView.printTotalDiscountPrice(discountResult.getTotalDiscountPrice());
+    private void printEventDetails(UserOrder userOrder, DiscountResult discountResult) {
+        outputView.printTotalBenefitPrice(discountResult.getTotalBenefitPrice());
 
-        // 할인 후 예상 결제 금액 출력
         int expectedPrice = discountService.getExpectedPrice(userOrder, discountResult);
         outputView.printExpectedPrice(expectedPrice);
     }
 
     private void printBadge(DiscountResult discountResult) {
-        // 12월 이벤트 배지 출력
-        int totalDiscountPrice = discountResult.getTotalDiscountPrice();
-//        int totalBenefitPrice = discountResult.getTotalBenefitPrice();
+        int totalDiscountPrice = discountResult.getTotalBenefitPrice();
         outputView.printEventBadge(BadgeType.from(totalDiscountPrice));
     }
 }

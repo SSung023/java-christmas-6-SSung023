@@ -53,9 +53,9 @@ class OutputViewTest {
 
         //when
         DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
-        
+
         //then
-        outputView.printTotalDiscountPrice(discountResult.getTotalDiscountPrice());
+        outputView.printTotalBenefitPrice(discountResult.getTotalBenefitPrice());
     }
 
     @Test

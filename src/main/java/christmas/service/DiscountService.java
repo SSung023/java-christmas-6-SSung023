@@ -17,7 +17,6 @@ import christmas.model.discount.WeekendDiscount;
 
 public class DiscountService {
 
-
     public DiscountResult calculateDiscountInfo(UserOrder userOrder) {
         DiscountResult discountResult = new DiscountResult();
 
@@ -41,10 +40,10 @@ public class DiscountService {
     }
 
     public int getDiscountedPrice(DiscountResult discountResult) {
-        return discountResult.getTotalDiscountPrice();
+        return discountResult.getTotalBenefitPrice();
     }
 
     public int getExpectedPrice(UserOrder userOrder, DiscountResult discountResult) {
-        return userOrder.orderPrice() - discountResult.getTotalBenefitPrice();
+        return userOrder.orderPrice() - discountResult.getTotalDiscountPrice();
     }
 }

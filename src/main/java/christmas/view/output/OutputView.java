@@ -18,6 +18,7 @@ import static christmas.constants.Message.TOTAL_HEADER;
 import static christmas.constants.menu.Menu.CHAMPAGNE;
 
 import christmas.constants.event.BadgeType;
+import christmas.constants.event.EventType;
 import christmas.constants.menu.Menu;
 import christmas.model.DiscountResult;
 import christmas.model.discount.Discountable;
@@ -68,14 +69,14 @@ public class OutputView {
         }
 
         discountResult.getDiscountApplied()
-                .forEach(entry -> {
-                    int priceByEvent = discountResult.getDiscountPriceByEvent(entry.getKey());
-                    stringBuilder.append(
-                            String.format(DISCOUNT_FORMAT.getMessage(), entry.getKey().getDescription(),
-                                    decimalFormat.format(priceByEvent))
-                    );
-                });
+                .forEach(entry -> stringBuilder.append(getDetailPerDiscount(discountResult, entry.getKey())));
         writer.printLine(stringBuilder.toString());
+    }
+
+    private String getDetailPerDiscount(DiscountResult discountResult, EventType eventType) {
+        int priceByDiscount = discountResult.getDiscountPriceByEvent(eventType);
+        return String.format(DISCOUNT_FORMAT.getMessage(), eventType.getDescription(),
+                decimalFormat.format(priceByDiscount));
     }
 
     public void printTotalDiscountPrice(DiscountResult discountResult) {

@@ -1,8 +1,5 @@
 package christmas.constants.event;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 public enum BadgeType {
     NONE("없음", 0),
     STAR("별", 5_000),
@@ -18,16 +15,15 @@ public enum BadgeType {
     }
 
     public static BadgeType from(int benefitPrice) {
-        return Arrays.stream(values())
-                .filter(badgeType -> benefitPrice >= badgeType.threshold)
-                .min(Comparator.comparingInt(BadgeType::getThreshold))
-                .orElseThrow();
+        BadgeType result = NONE;
+        for (BadgeType badgeType : values()) {
+            if (benefitPrice >= badgeType.threshold) {
+                result = badgeType;
+            }
+        }
+        return result;
     }
-
-    private int getThreshold() {
-        return threshold;
-    }
-
+    
     public String getName() {
         return name;
     }

@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class MenuService {
     private final Map<Menu, Integer> menuScript;
@@ -41,17 +42,8 @@ public class MenuService {
         validateTotalMenuAmount(singleMenus);
     }
 
-    private void validatePerMenuAmount(List<SingleMenu> singleMenus) {
-        boolean present = singleMenus.stream()
-                .anyMatch(singleOrder -> singleOrder.amount() < 1);
-        if (present) {
-            throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
-        }
-    }
-
     private void validateDuplicate(List<SingleMenu> singleMenus) {
-        int count = (int) singleMenus.stream()
-                .map(singleOrder -> Menu.from(singleOrder.menu()))
+        int count = (int) getMenuStream(singleMenus)
                 .distinct()
                 .count();
 
@@ -61,12 +53,24 @@ public class MenuService {
     }
 
     private void validateOnlyDrink(List<SingleMenu> singleMenus) {
-        int drinks = (int) singleMenus.stream()
-                .map(singleOrder -> Menu.from(singleOrder.menu()))
+        int drinks = (int) getMenuStream(singleMenus)
                 .filter(menu -> menu.getMenuType() == DRINKS)
                 .count();
 
         if (drinks > 0 && drinks == singleMenus.size()) {
+            throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
+        }
+    }
+
+    private Stream<Menu> getMenuStream(List<SingleMenu> singleMenus) {
+        return singleMenus.stream()
+                .map(singleOrder -> Menu.from(singleOrder.menu()));
+    }
+
+    private void validatePerMenuAmount(List<SingleMenu> singleMenus) {
+        boolean present = singleMenus.stream()
+                .anyMatch(singleOrder -> singleOrder.amount() < 1);
+        if (present) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }

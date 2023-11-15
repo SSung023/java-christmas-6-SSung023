@@ -1,6 +1,7 @@
 package christmas.config;
 
 import christmas.controller.EventController;
+import christmas.exception.ExceptionHandler;
 import christmas.service.DiscountService;
 import christmas.service.MenuService;
 import christmas.validator.InputValidator;
@@ -17,6 +18,7 @@ public class AppConfig {
     private DiscountService discountService;
     private MenuService menuService;
     private InputValidator inputValidator;
+    private ExceptionHandler exceptionHandler;
     private InputView inputView;
     private OutputView outputView;
     private Reader reader;
@@ -24,63 +26,71 @@ public class AppConfig {
 
     public static AppConfig getInstance() {
         if (appConfig == null) {
-            return new AppConfig();
+            appConfig = new AppConfig();
         }
         return appConfig;
     }
 
     public EventController eventController() {
         if (eventController == null) {
-            return new EventController(discountService(), menuService(), inputView(), outputView());
+            eventController = new EventController(discountService(), menuService(),
+                    inputView(), outputView(), exceptionHandler());
         }
         return eventController;
     }
 
     public DiscountService discountService() {
         if (discountService == null) {
-            return new DiscountService();
+            discountService = new DiscountService();
         }
         return discountService;
     }
 
     public MenuService menuService() {
         if (menuService == null) {
-            return new MenuService();
+            menuService = new MenuService();
         }
         return menuService;
     }
 
+    public ExceptionHandler exceptionHandler() {
+        if (exceptionHandler == null) {
+            exceptionHandler = new ExceptionHandler();
+        }
+        return exceptionHandler;
+    }
+
     public InputView inputView() {
         if (inputView == null) {
-            return new InputView(reader(), inputValidator());
+            inputView = new InputView(reader(), inputValidator());
         }
         return inputView;
     }
 
     public InputValidator inputValidator() {
         if (inputValidator == null) {
-            return new InputValidator();
+            inputValidator = new InputValidator();
         }
         return inputValidator;
     }
 
     public Reader reader() {
         if (reader == null) {
-            return new ConsoleReader();
+            reader = new ConsoleReader();
         }
         return reader;
     }
 
     public OutputView outputView() {
         if (outputView == null) {
-            return new OutputView(writer());
+            outputView = new OutputView(writer());
         }
         return outputView;
     }
 
     public Writer writer() {
         if (writer == null) {
-            return new ConsoleWriter();
+            writer = new ConsoleWriter();
         }
         return writer;
     }

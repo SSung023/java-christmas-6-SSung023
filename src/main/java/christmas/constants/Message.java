@@ -9,6 +9,7 @@ public enum Message {
     ORDER_HEADER("<주문 메뉴>"),
     MENU_FORMAT("%s %d개%n"),
     DISCOUNT_FORMAT("%s: -%s원%n"),
+    PRICE_FORMAT("%s원"),
     TOTAL_HEADER("<할인 전 총주문 금액>"),
     PRESENT_HEADER("<증정 메뉴>"),
     DISCOUNT_HEADER("<혜택 내역>"),

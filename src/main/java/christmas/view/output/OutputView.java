@@ -13,6 +13,7 @@ import static christmas.constants.Message.NONE;
 import static christmas.constants.Message.ORDER_HEADER;
 import static christmas.constants.Message.PRESENT_HEADER;
 import static christmas.constants.Message.PREVIEW;
+import static christmas.constants.Message.PRICE_FORMAT;
 import static christmas.constants.Message.TOTAL_DISCOUNT_HEADER;
 import static christmas.constants.Message.TOTAL_HEADER;
 import static christmas.constants.menu.Menu.CHAMPAGNE;
@@ -51,6 +52,7 @@ public class OutputView {
         writer.printLine(PRESENT_HEADER.getMessage());
         if (presentDiscount.getDiscountPrice() == 0) {
             writer.printLine(NONE.getMessage());
+            writer.printNewLine(1);
             return;
         }
         writer.printFormat(MENU_FORMAT.getMessage(), CHAMPAGNE.getName(), 1);
@@ -64,6 +66,7 @@ public class OutputView {
         if (discountResult.isEventNotApplied()) {
             stringBuilder.append(NONE.getMessage());
             writer.printLine(stringBuilder.toString());
+            writer.printNewLine(1);
             return;
         }
 
@@ -78,15 +81,21 @@ public class OutputView {
                 decimalFormat.format(priceByDiscount));
     }
 
-    public void printTotalDiscountPrice(DiscountResult discountResult) {
+    public void printTotalDiscountPrice(int totalDiscountPrice) {
         writer.printLine(TOTAL_DISCOUNT_HEADER.getMessage());
-        writer.printFormat("-%s원", decimalFormat.format(discountResult.getTotalDiscountPrice()));
+
+        String format = PRICE_FORMAT.getMessage();
+        if (totalDiscountPrice != 0) {
+            format = "-" + format;
+        }
+
+        writer.printFormat(format, decimalFormat.format(totalDiscountPrice));
         writer.printNewLine(2);
     }
 
     public void printExpectedPrice(int expectedPrice) {
         writer.printLine(EXPECT_PAY_HEADER.getMessage());
-        writer.printFormat("%s원", decimalFormat.format(expectedPrice));
+        writer.printFormat(PRICE_FORMAT.getMessage(), decimalFormat.format(expectedPrice));
         writer.printNewLine(2);
     }
 
@@ -110,7 +119,7 @@ public class OutputView {
 
     public void printBeforeDiscountPrice(int orderPrice) {
         writer.printLine(TOTAL_HEADER.getMessage());
-        writer.printFormat("%s원", decimalFormat.format(orderPrice));
+        writer.printFormat(PRICE_FORMAT.getMessage(), decimalFormat.format(orderPrice));
     }
 
     public void printPreview(int date) {

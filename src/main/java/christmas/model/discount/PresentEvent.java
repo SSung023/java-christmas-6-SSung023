@@ -3,23 +3,23 @@ package christmas.model.discount;
 import static christmas.constants.event.EventRule.PRESENT_THRESHOLD;
 import static christmas.constants.menu.Menu.CHAMPAGNE;
 
-public class PresentDiscount implements Discountable<Integer> {
+public class PresentEvent implements Eventable<Integer> {
     private final int amount;
 
-    private PresentDiscount(int orderPrice) {
-        if (canDiscount(orderPrice)) {
+    private PresentEvent(int orderPrice) {
+        if (canJoinEvent(orderPrice)) {
             this.amount = 1;
             return;
         }
         this.amount = 0;
     }
 
-    public static PresentDiscount create(int orderPrice) {
-        return new PresentDiscount(orderPrice);
+    public static PresentEvent create(int orderPrice) {
+        return new PresentEvent(orderPrice);
     }
 
     @Override
-    public boolean canDiscount(Integer orderPrice) {
+    public boolean canJoinEvent(Integer orderPrice) {
         if (orderPrice < PRESENT_THRESHOLD.getValue()) {
             return false;
         }

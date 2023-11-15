@@ -3,8 +3,8 @@ package christmas.view;
 import christmas.constants.event.BadgeType;
 import christmas.constants.menu.Menu;
 import christmas.dto.UserOrder;
-import christmas.model.DiscountResult;
-import christmas.model.discount.PresentDiscount;
+import christmas.model.EventResult;
+import christmas.model.discount.PresentEvent;
 import christmas.service.DiscountService;
 import christmas.view.output.ConsoleWriter;
 import christmas.view.output.OutputView;
@@ -21,15 +21,15 @@ class OutputViewTest {
     @Test
     @DisplayName("증정 이벤트에 대한 출력 테스트 - 12만원 이상이면 샴페인 1개를 출력")
     public void presentDiscountTest() {
-        PresentDiscount presentDiscount = PresentDiscount.create(120_000);
-        outputView.printPresent(presentDiscount);
+        PresentEvent presentEvent = PresentEvent.create(120_000);
+        outputView.printPresent(presentEvent);
     }
 
     @Test
     @DisplayName("증정 이벤트에 대한 출력 테스트 - 12만원 미만이면 없음을 출력")
     public void presentDiscountTestd() {
-        PresentDiscount presentDiscount = PresentDiscount.create(10000);
-        outputView.printPresent(presentDiscount);
+        PresentEvent presentEvent = PresentEvent.create(10000);
+        outputView.printPresent(presentEvent);
     }
 
     @Test
@@ -39,10 +39,10 @@ class OutputViewTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
 
         //then
-        outputView.printDiscountDetails(discountResult);
+        outputView.printEventDetails(eventResult);
     }
 
     @Test
@@ -52,10 +52,10 @@ class OutputViewTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
 
         //then
-        outputView.printTotalBenefitPrice(discountResult.getTotalBenefitPrice());
+        outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
     }
 
     @Test
@@ -65,8 +65,8 @@ class OutputViewTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
-        int expectedPrice = discountService.getExpectedPrice(userOrder, discountResult);
+        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        int expectedPrice = discountService.getExpectedPrice(userOrder, eventResult);
 
         //then
         outputView.printExpectedPrice(expectedPrice);

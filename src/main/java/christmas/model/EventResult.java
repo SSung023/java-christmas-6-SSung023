@@ -3,22 +3,22 @@ package christmas.model;
 import static christmas.constants.event.EventType.PRESENT;
 
 import christmas.constants.event.EventType;
-import christmas.model.discount.Discountable;
+import christmas.model.discount.Eventable;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Stream;
 
-public class DiscountResult {
-    private final Map<EventType, Discountable> discountResult;
+public class EventResult {
+    private final Map<EventType, Eventable> discountResult;
 
-    public DiscountResult() {
+    public EventResult() {
         discountResult = new EnumMap<>(EventType.class);
     }
 
     //TODO: add를 통해 계속 값을 추가하는것보다, 생성자를 통해 한 번에 받고 처리하는게 나을듯
-    public void addResult(EventType eventType, Discountable discountable) {
-        discountResult.put(eventType, discountable);
+    public void addResult(EventType eventType, Eventable eventable) {
+        discountResult.put(eventType, eventable);
     }
 
     public int getDiscountPriceByEvent(EventType eventType) {
@@ -30,7 +30,7 @@ public class DiscountResult {
     }
 
     //TODO: 굳이?
-    public Discountable getDiscountableByEvent(EventType eventType) {
+    public Eventable getDiscountableByEvent(EventType eventType) {
         return this.discountResult.get(eventType);
     }
 
@@ -45,7 +45,7 @@ public class DiscountResult {
     public int getTotalBenefitPrice() {
         return discountResult.values()
                 .stream()
-                .mapToInt(Discountable::getDiscountPrice)
+                .mapToInt(Eventable::getDiscountPrice)
                 .sum();
     }
 
@@ -53,7 +53,7 @@ public class DiscountResult {
         return (int) getDiscountApplied().count() == 0;
     }
 
-    public Stream<Entry<EventType, Discountable>> getDiscountApplied() {
+    public Stream<Entry<EventType, Eventable>> getDiscountApplied() {
         return discountResult.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().getDiscountPrice() != 0);

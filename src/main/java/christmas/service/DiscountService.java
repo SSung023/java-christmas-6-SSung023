@@ -8,42 +8,38 @@ import static christmas.constants.event.EventType.WEEKDAY;
 import static christmas.constants.event.EventType.WEEKEND;
 
 import christmas.dto.UserOrder;
-import christmas.model.DiscountResult;
-import christmas.model.discount.ChristmasDiscount;
-import christmas.model.discount.PresentDiscount;
-import christmas.model.discount.SpecialDiscount;
-import christmas.model.discount.WeekdayDiscount;
-import christmas.model.discount.WeekendDiscount;
+import christmas.model.EventResult;
+import christmas.model.discount.ChristmasEvent;
+import christmas.model.discount.PresentEvent;
+import christmas.model.discount.SpecialEvent;
+import christmas.model.discount.WeekdayEvent;
+import christmas.model.discount.WeekendEvent;
 
 public class DiscountService {
 
-    public DiscountResult calculateDiscountInfo(UserOrder userOrder) {
-        DiscountResult discountResult = new DiscountResult();
+    public EventResult calculateDiscountInfo(UserOrder userOrder) {
+        EventResult eventResult = new EventResult();
 
-        if (!canDiscount(userOrder.orderPrice())) {
+        if (!canJoinEvent(userOrder.orderPrice())) {
             userOrder = new UserOrder(0, 0, 0, 0);
         }
 
-        discountResult.addResult(PRESENT, PresentDiscount.create(userOrder.orderPrice()));
-        discountResult.addResult(CHRISTMAS, ChristmasDiscount.create(userOrder.date()));
-        discountResult.addResult(WEEKDAY, WeekdayDiscount.create(userOrder));
-        discountResult.addResult(WEEKEND, WeekendDiscount.create(userOrder));
-        discountResult.addResult(SPECIAL, SpecialDiscount.create(userOrder.date()));
-        return discountResult;
+        eventResult.addResult(PRESENT, PresentEvent.create(userOrder.orderPrice()));
+        eventResult.addResult(CHRISTMAS, ChristmasEvent.create(userOrder.date()));
+        eventResult.addResult(WEEKDAY, WeekdayEvent.create(userOrder));
+        eventResult.addResult(WEEKEND, WeekendEvent.create(userOrder));
+        eventResult.addResult(SPECIAL, SpecialEvent.create(userOrder.date()));
+        return eventResult;
     }
 
-    private boolean canDiscount(int orderPrice) {
+    private boolean canJoinEvent(int orderPrice) {
         if (orderPrice < EVENT_THRESHOLD.getValue()) {
             return false;
         }
         return true;
     }
 
-    public int getDiscountedPrice(DiscountResult discountResult) {
-        return discountResult.getTotalBenefitPrice();
-    }
-
-    public int getExpectedPrice(UserOrder userOrder, DiscountResult discountResult) {
-        return userOrder.orderPrice() - discountResult.getTotalDiscountPrice();
+    public int getExpectedPrice(UserOrder userOrder, EventResult eventResult) {
+        return userOrder.orderPrice() - eventResult.getTotalDiscountPrice();
     }
 }

@@ -2,22 +2,22 @@ package christmas.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.model.discount.PresentDiscount;
+import christmas.model.discount.PresentEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class PresentDiscountTest {
+class PresentEventTest {
 
     @ParameterizedTest(name = "총 주문 금액: {0}")
     @DisplayName("총주문금액이 주어졌을 때, 120,000원 이상이라면 할인 금액은 25000원이다")
     @ValueSource(ints = {120_000, 120_100})
     public void should_discountPriceIs25000_when_orderPriceOver120000(int orderPrice) {
         //given
-        PresentDiscount presentDiscount = PresentDiscount.create(orderPrice);
+        PresentEvent presentEvent = PresentEvent.create(orderPrice);
 
         //when
-        int discountPrice = presentDiscount.getDiscountPrice();
+        int discountPrice = presentEvent.getDiscountPrice();
 
         //then
         assertThat(discountPrice).isEqualTo(25_000);
@@ -28,10 +28,10 @@ class PresentDiscountTest {
     @ValueSource(ints = {119_999, 0})
     public void should_discountPriceIs0_when_orderPriceUnder120000(int orderPrice) {
         //given
-        PresentDiscount presentDiscount = PresentDiscount.create(orderPrice);
+        PresentEvent presentEvent = PresentEvent.create(orderPrice);
 
         //when
-        int discountPrice = presentDiscount.getDiscountPrice();
+        int discountPrice = presentEvent.getDiscountPrice();
 
         //then
         assertThat(discountPrice).isEqualTo(0);

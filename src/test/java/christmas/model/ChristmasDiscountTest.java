@@ -2,7 +2,7 @@ package christmas.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.model.discount.ChristmasDiscount;
+import christmas.model.discount.ChristmasEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,10 +14,10 @@ class ChristmasDiscountTest {
     @ValueSource(ints = {1, 15, 25})
     public void should_discount_when_dateIsValid(int date) {
         //given
-        ChristmasDiscount christmasDiscount = ChristmasDiscount.create(date);
+        ChristmasEvent christmasEvent = ChristmasEvent.create(date);
 
         //when
-        boolean canDiscount = christmasDiscount.canDiscount(date);
+        boolean canDiscount = christmasEvent.canJoinEvent(date);
 
         //then
         assertThat(canDiscount).isTrue();
@@ -28,10 +28,10 @@ class ChristmasDiscountTest {
     @ValueSource(ints = {26, 30, 31})
     public void should_discount_when_dateIsInvalid(int date) {
         //given
-        ChristmasDiscount christmasDiscount = ChristmasDiscount.create(date);
+        ChristmasEvent christmasEvent = ChristmasEvent.create(date);
 
         //when
-        boolean canDiscount = christmasDiscount.canDiscount(date);
+        boolean canDiscount = christmasEvent.canJoinEvent(date);
 
         //then
         assertThat(canDiscount).isFalse();
@@ -46,10 +46,10 @@ class ChristmasDiscountTest {
     })
     public void should_discount_when_(int date, int result) {
         //given
-        ChristmasDiscount christmasDiscount = ChristmasDiscount.create(date);
+        ChristmasEvent christmasEvent = ChristmasEvent.create(date);
 
         //when
-        int discountPrice = christmasDiscount.getDiscountPrice();
+        int discountPrice = christmasEvent.getDiscountPrice();
 
         //then
         assertThat(discountPrice).isEqualTo(result);

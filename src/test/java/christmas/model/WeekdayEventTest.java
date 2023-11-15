@@ -4,12 +4,12 @@ import static christmas.constants.event.EventRule.MENU_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.dto.UserOrder;
-import christmas.model.discount.WeekdayDiscount;
+import christmas.model.discount.WeekdayEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class WeekdayDiscountTest {
+class WeekdayEventTest {
     @ParameterizedTest(name = "주문 날짜: {0}, 디저트 주문 개수: {1}")
     @DisplayName("평일에 주문했고, 디저트를 1개 이상 주문했다면 수량 * 2,023만큼 할인이 된다.")
     @CsvSource({
@@ -22,10 +22,10 @@ class WeekdayDiscountTest {
     public void should_discountPerDessert_when_orderValid(int date, int dessertAmount) {
         //given
         UserOrder userOrder = new UserOrder(0, date, 0, dessertAmount);
-        WeekdayDiscount weekdayDiscount = WeekdayDiscount.create(userOrder);
+        WeekdayEvent weekdayEvent = WeekdayEvent.create(userOrder);
 
         //when && then
-        assertThat(weekdayDiscount.getDiscountPrice())
+        assertThat(weekdayEvent.getDiscountPrice())
                 .isEqualTo(MENU_DISCOUNT.getValue() * dessertAmount);
     }
 
@@ -41,9 +41,9 @@ class WeekdayDiscountTest {
     public void should_notDiscount_when_dessertAmountIsZero(int date, int dessertAmount) {
         //given
         UserOrder userOrder = new UserOrder(0, date, 0, dessertAmount);
-        WeekdayDiscount weekdayDiscount = WeekdayDiscount.create(userOrder);
+        WeekdayEvent weekdayEvent = WeekdayEvent.create(userOrder);
 
         //when && then
-        assertThat(weekdayDiscount.getDiscountPrice()).isEqualTo(0);
+        assertThat(weekdayEvent.getDiscountPrice()).isEqualTo(0);
     }
 }

@@ -21,8 +21,8 @@ import static christmas.constants.menu.Menu.CHAMPAGNE;
 import christmas.constants.event.BadgeType;
 import christmas.constants.event.EventType;
 import christmas.constants.menu.Menu;
-import christmas.model.DiscountResult;
-import christmas.model.discount.Discountable;
+import christmas.model.EventResult;
+import christmas.model.discount.Eventable;
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -67,7 +67,7 @@ public class OutputView {
         writer.printNewLine(2);
     }
 
-    public void printPresent(Discountable presentDiscount) {
+    public void printPresent(Eventable presentDiscount) {
         StringBuilder stringBuilder = new StringBuilder(PRESENT_HEADER.getMessage())
                 .append(NEW_LINE.getMessage());
 
@@ -81,24 +81,24 @@ public class OutputView {
         writer.printLine(stringBuilder.toString());
     }
 
-    public void printDiscountDetails(DiscountResult discountResult) {
+    public void printEventDetails(EventResult eventResult) {
         StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage())
                 .append(NEW_LINE.getMessage());
 
-        if (discountResult.isEventNotApplied()) {
+        if (eventResult.isEventNotApplied()) {
             stringBuilder.append(NONE.getMessage())
                     .append(NEW_LINE.getMessage());
             writer.printLine(stringBuilder.toString());
             return;
         }
 
-        discountResult.getDiscountApplied()
-                .forEach(entry -> stringBuilder.append(getDetailPerDiscount(discountResult, entry.getKey())));
+        eventResult.getDiscountApplied()
+                .forEach(entry -> stringBuilder.append(getDetailPerDiscount(eventResult, entry.getKey())));
         writer.printLine(stringBuilder.toString());
     }
 
-    private String getDetailPerDiscount(DiscountResult discountResult, EventType eventType) {
-        int priceByDiscount = discountResult.getDiscountPriceByEvent(eventType);
+    private String getDetailPerDiscount(EventResult eventResult, EventType eventType) {
+        int priceByDiscount = eventResult.getDiscountPriceByEvent(eventType);
         return String.format(DISCOUNT_FORMAT.getMessage(), eventType.getDescription(),
                 decimalFormat.format(priceByDiscount));
     }

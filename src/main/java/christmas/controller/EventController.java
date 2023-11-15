@@ -8,7 +8,7 @@ import christmas.constants.event.EventType;
 import christmas.dto.SingleOrder;
 import christmas.dto.UserOrder;
 import christmas.exception.RetryHandler;
-import christmas.model.DiscountResult;
+import christmas.model.EventResult;
 import christmas.service.DiscountService;
 import christmas.service.MenuService;
 import christmas.view.input.InputView;
@@ -36,10 +36,10 @@ public class EventController {
         UserOrder userOrder = getOrderMenu(visitDate);
         printOrderInformation();
 
-        DiscountResult discountResult = getDiscountResult(userOrder);
-        printEventDetails(userOrder, discountResult);
+        EventResult eventResult = getDiscountResult(userOrder);
+        printEventDetails(userOrder, eventResult);
 
-        printBadge(discountResult);
+        printBadge(eventResult);
         inputView.close();
     }
 
@@ -71,24 +71,24 @@ public class EventController {
         outputView.printBeforeDiscountPrice(menuService.getOrderPrice());
     }
 
-    private DiscountResult getDiscountResult(UserOrder userOrder) {
-        DiscountResult discountResult = discountService.calculateDiscountInfo(userOrder);
+    private EventResult getDiscountResult(UserOrder userOrder) {
+        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
 
-        outputView.printPresent(discountResult.getDiscountableByEvent(EventType.PRESENT));
-        outputView.printDiscountDetails(discountResult);
+        outputView.printPresent(eventResult.getDiscountableByEvent(EventType.PRESENT));
+        outputView.printEventDetails(eventResult);
 
-        return discountResult;
+        return eventResult;
     }
 
-    private void printEventDetails(UserOrder userOrder, DiscountResult discountResult) {
-        outputView.printTotalBenefitPrice(discountResult.getTotalBenefitPrice());
+    private void printEventDetails(UserOrder userOrder, EventResult eventResult) {
+        outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
 
-        int expectedPrice = discountService.getExpectedPrice(userOrder, discountResult);
+        int expectedPrice = discountService.getExpectedPrice(userOrder, eventResult);
         outputView.printExpectedPrice(expectedPrice);
     }
 
-    private void printBadge(DiscountResult discountResult) {
-        int totalDiscountPrice = discountResult.getTotalBenefitPrice();
+    private void printBadge(EventResult eventResult) {
+        int totalDiscountPrice = eventResult.getTotalBenefitPrice();
         outputView.printEventBadge(BadgeType.from(totalDiscountPrice));
     }
 }

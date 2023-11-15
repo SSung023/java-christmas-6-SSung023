@@ -5,19 +5,19 @@ import static christmas.constants.event.EventRule.CHRISTMAS_EXTRA_DISCOUNT;
 import static christmas.constants.event.EventRule.CHRISTMAS_INIT_PRICE;
 import static christmas.constants.event.EventRule.EVENT_START;
 
-public class ChristmasDiscount implements Discountable<Integer> {
+public class ChristmasEvent implements Eventable<Integer> {
     private final int discountPrice;
 
-    private ChristmasDiscount(int date) {
-        if (canDiscount(date)) {
+    private ChristmasEvent(int date) {
+        if (canJoinEvent(date)) {
             this.discountPrice = calculateDiscountPrice(date);
             return;
         }
         this.discountPrice = 0;
     }
 
-    public static ChristmasDiscount create(int date) {
-        return new ChristmasDiscount(date);
+    public static ChristmasEvent create(int date) {
+        return new ChristmasEvent(date);
     }
 
     private int calculateDiscountPrice(int date) {
@@ -29,7 +29,7 @@ public class ChristmasDiscount implements Discountable<Integer> {
     }
 
     @Override
-    public boolean canDiscount(Integer date) {
+    public boolean canJoinEvent(Integer date) {
         if (date < EVENT_START.getValue() || CHRISTMAS_EVENT_END.getValue() < date) {
             return false;
         }

@@ -4,23 +4,23 @@ import static christmas.constants.event.EventRule.SPECIAL_DISCOUNT;
 
 import christmas.util.DayAnalyzer;
 
-public class SpecialDiscount implements Discountable<Integer> {
+public class SpecialEvent implements Eventable<Integer> {
     private final int discountPrice;
 
-    private SpecialDiscount(Integer date) {
-        if (canDiscount(date)) {
+    private SpecialEvent(Integer date) {
+        if (canJoinEvent(date)) {
             discountPrice = SPECIAL_DISCOUNT.getValue();
             return;
         }
         discountPrice = 0;
     }
 
-    public static SpecialDiscount create(Integer date) {
-        return new SpecialDiscount(date);
+    public static SpecialEvent create(Integer date) {
+        return new SpecialEvent(date);
     }
 
     @Override
-    public boolean canDiscount(Integer date) {
+    public boolean canJoinEvent(Integer date) {
         return DayAnalyzer.isSpecialDay(date);
     }
 

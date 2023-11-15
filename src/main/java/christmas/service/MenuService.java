@@ -6,7 +6,7 @@ import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 
 import christmas.constants.menu.Menu;
 import christmas.constants.menu.MenuType;
-import christmas.dto.SingleOrder;
+import christmas.dto.SingleMenu;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
@@ -19,9 +19,9 @@ public class MenuService {
         this.menuScript = new EnumMap<>(Menu.class);
     }
 
-    public void order(List<SingleOrder> singleOrders) {
-        validate(singleOrders);
-        singleOrders.forEach(singleOrder -> {
+    public void order(List<SingleMenu> singleMenus) {
+        validate(singleMenus);
+        singleMenus.forEach(singleOrder -> {
             Menu menu = Menu.from(singleOrder.menu());
             menuScript.put(menu, singleOrder.amount());
         });
@@ -34,46 +34,46 @@ public class MenuService {
                 .sum();
     }
 
-    private void validate(List<SingleOrder> singleOrders) {
-        validateDuplicate(singleOrders);
-        validatePerMenuAmount(singleOrders);
-        validateOnlyDrink(singleOrders);
-        validateTotalMenuAmount(singleOrders);
+    private void validate(List<SingleMenu> singleMenus) {
+        validateDuplicate(singleMenus);
+        validatePerMenuAmount(singleMenus);
+        validateOnlyDrink(singleMenus);
+        validateTotalMenuAmount(singleMenus);
     }
 
-    private void validatePerMenuAmount(List<SingleOrder> singleOrders) {
-        boolean present = singleOrders.stream()
+    private void validatePerMenuAmount(List<SingleMenu> singleMenus) {
+        boolean present = singleMenus.stream()
                 .anyMatch(singleOrder -> singleOrder.amount() < 1);
         if (present) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }
 
-    private void validateDuplicate(List<SingleOrder> singleOrders) {
-        int count = (int) singleOrders.stream()
+    private void validateDuplicate(List<SingleMenu> singleMenus) {
+        int count = (int) singleMenus.stream()
                 .map(singleOrder -> Menu.from(singleOrder.menu()))
                 .distinct()
                 .count();
 
-        if (count != singleOrders.size()) {
+        if (count != singleMenus.size()) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }
 
-    private void validateOnlyDrink(List<SingleOrder> singleOrders) {
-        int drinks = (int) singleOrders.stream()
+    private void validateOnlyDrink(List<SingleMenu> singleMenus) {
+        int drinks = (int) singleMenus.stream()
                 .map(singleOrder -> Menu.from(singleOrder.menu()))
                 .filter(menu -> menu.getMenuType() == DRINKS)
                 .count();
 
-        if (drinks > 0 && drinks == singleOrders.size()) {
+        if (drinks > 0 && drinks == singleMenus.size()) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }
 
-    private void validateTotalMenuAmount(List<SingleOrder> singleOrders) {
-        int totalAmount = singleOrders.stream()
-                .mapToInt(SingleOrder::amount)
+    private void validateTotalMenuAmount(List<SingleMenu> singleMenus) {
+        int totalAmount = singleMenus.stream()
+                .mapToInt(SingleMenu::amount)
                 .sum();
         if (totalAmount >= MAX_MENU_AMOUNT.getValue()) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());

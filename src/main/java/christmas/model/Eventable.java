@@ -1,4 +1,4 @@
-package christmas.model.discount;
+package christmas.model;
 
 public interface Eventable<T> {
     boolean canJoinEvent(T condition);

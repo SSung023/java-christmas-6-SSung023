@@ -1,4 +1,4 @@
-package christmas.model.discount;
+package christmas.model;
 
 import static christmas.constants.event.EventRule.PRESENT_THRESHOLD;
 import static christmas.constants.menu.Menu.CHAMPAGNE;

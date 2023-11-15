@@ -5,26 +5,25 @@ import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.MAIN;
 
 import christmas.constants.event.BadgeType;
-import christmas.dto.SingleOrder;
+import christmas.dto.SingleMenu;
 import christmas.dto.UserOrder;
 import christmas.exception.RetryHandler;
-import christmas.model.EventResult;
-import christmas.service.DiscountService;
+import christmas.service.EventService;
 import christmas.service.MenuService;
 import christmas.view.input.InputView;
 import christmas.view.output.OutputView;
 import java.util.List;
 
 public class EventController {
-    private final DiscountService discountService;
+    private final EventService eventService;
     private final MenuService menuService;
     private final InputView inputView;
     private final OutputView outputView;
     private final RetryHandler retryHandler;
 
-    public EventController(DiscountService discountService, MenuService menuService, InputView inputView,
+    public EventController(EventService eventService, MenuService menuService, InputView inputView,
                            OutputView outputView, RetryHandler retryHandler) {
-        this.discountService = discountService;
+        this.eventService = eventService;
         this.menuService = menuService;
         this.inputView = inputView;
         this.outputView = outputView;
@@ -33,13 +32,13 @@ public class EventController {
 
     public void run() {
         int visitDate = getVisitDate();
-        UserOrder userOrder = getMenuOrder(visitDate);
+        UserOrder userOrder = receiveOrder(visitDate);
         printOrderInformation();
 
-        EventResult eventResult = getEventResult(userOrder);
-        printEventDetails(userOrder, eventResult);
+        applyEvent(userOrder);
+        printEventDetails(userOrder);
 
-        printBadge(eventResult);
+        printBadge();
         inputView.close();
     }
 
@@ -50,7 +49,7 @@ public class EventController {
         return retryHandler.execute(inputView::askVisitDate, IllegalArgumentException.class);
     }
 
-    private UserOrder getMenuOrder(int visitDate) {
+    private UserOrder receiveOrder(int visitDate) {
         outputView.printAskMenu();
         UserOrder userOrder = retryHandler.execute(() -> getUserOrder(visitDate), IllegalArgumentException.class);
         outputView.printPreview(visitDate);
@@ -59,11 +58,14 @@ public class EventController {
     }
 
     private UserOrder getUserOrder(int visitDate) {
-        List<SingleOrder> singleOrders = inputView.askOrderMenu();
-        menuService.order(singleOrders);
-        return new UserOrder(menuService.getOrderPrice(), visitDate,
+        List<SingleMenu> singleMenus = inputView.askOrderMenu();
+        menuService.order(singleMenus);
+        return new UserOrder(
+                menuService.getOrderPrice(),
+                visitDate,
                 menuService.getAmountByMenu(MAIN),
-                menuService.getAmountByMenu(DESSERT));
+                menuService.getAmountByMenu(DESSERT)
+        );
     }
 
     private void printOrderInformation() {
@@ -71,22 +73,22 @@ public class EventController {
         outputView.printBeforeDiscountPrice(menuService.getOrderPrice());
     }
 
-    private EventResult getEventResult(UserOrder userOrder) {
-        return discountService.calculateEventResult(userOrder);
+    private void applyEvent(UserOrder userOrder) {
+        eventService.applyEvent(userOrder);
     }
 
-    private void printEventDetails(UserOrder userOrder, EventResult eventResult) {
-        int discountPrice = eventResult.getDiscountPriceByEvent(PRESENT);
-        int expectedPrice = discountService.getExpectedPrice(userOrder, eventResult);
+    private void printEventDetails(UserOrder userOrder) {
+        int discountPrice = eventService.getDiscountPriceByEvent(PRESENT);
+        int expectedPrice = eventService.getExpectedPrice(userOrder);
 
         outputView.printPresent(discountPrice);
-        outputView.printEventDetails(eventResult);
-        outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
+        outputView.printEventDetails(eventService.convertToEventDetails());
+        outputView.printTotalBenefitPrice(eventService.getTotalBenefitPrice());
         outputView.printExpectedPrice(expectedPrice);
     }
 
-    private void printBadge(EventResult eventResult) {
-        int totalDiscountPrice = eventResult.getTotalBenefitPrice();
+    private void printBadge() {
+        int totalDiscountPrice = eventService.getTotalBenefitPrice();
         outputView.printEventBadge(BadgeType.from(totalDiscountPrice));
     }
 }

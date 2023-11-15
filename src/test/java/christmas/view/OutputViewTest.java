@@ -2,11 +2,12 @@ package christmas.view;
 
 import christmas.constants.event.BadgeType;
 import christmas.constants.menu.Menu;
+import christmas.dto.EventDetail;
 import christmas.dto.UserOrder;
-import christmas.model.EventResult;
-import christmas.service.DiscountService;
+import christmas.service.EventService;
 import christmas.view.output.ConsoleWriter;
 import christmas.view.output.OutputView;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class OutputViewTest {
     private final OutputView outputView = new OutputView(new ConsoleWriter());
-    private final DiscountService discountService = new DiscountService();
+    private final EventService eventService = new EventService();
 
     @Test
     @DisplayName("증정 이벤트에 대한 출력 테스트 - 12만원 이상이면 샴페인 1개를 출력")
@@ -33,37 +34,39 @@ class OutputViewTest {
     @DisplayName("혜택 내역에 대한 출력 테스트")
     public void discountInfoPrintTest() {
         //given
-        UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
+        UserOrder userOrder = getUserOrder();
 
         //when
-        EventResult eventResult = discountService.calculateEventResult(userOrder);
+        eventService.applyEvent(userOrder);
+        List<EventDetail> eventDetails = eventService.convertToEventDetails();
 
         //then
-        outputView.printEventDetails(eventResult);
+        outputView.printEventDetails(eventDetails);
     }
 
     @Test
     @DisplayName("총 혜택 내역에 대한 출력 테스트")
     public void totalDiscountPrintTest() {
         //given
-        UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
+        UserOrder userOrder = getUserOrder();
 
         //when
-        EventResult eventResult = discountService.calculateEventResult(userOrder);
+        eventService.applyEvent(userOrder);
+        int totalBenefitPrice = eventService.getTotalBenefitPrice();
 
         //then
-        outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
+        outputView.printTotalBenefitPrice(totalBenefitPrice);
     }
 
     @Test
     @DisplayName("할인 후 예상 결제 금액 출력 테스트")
     public void expectedPricePrintTest() {
         //given
-        UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
+        UserOrder userOrder = getUserOrder();
 
         //when
-        EventResult eventResult = discountService.calculateEventResult(userOrder);
-        int expectedPrice = discountService.getExpectedPrice(userOrder, eventResult);
+        eventService.applyEvent(userOrder);
+        int expectedPrice = eventService.getExpectedPrice(userOrder);
 
         //then
         outputView.printExpectedPrice(expectedPrice);
@@ -97,5 +100,9 @@ class OutputViewTest {
         //when && then
         outputView.printBeforeDiscountPrice(orderPrice);
 
+    }
+
+    private UserOrder getUserOrder() {
+        return new UserOrder(142_000, 3, 2, 2);
     }
 }

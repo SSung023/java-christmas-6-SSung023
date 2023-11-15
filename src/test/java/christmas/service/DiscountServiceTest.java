@@ -8,12 +8,11 @@ import static christmas.constants.event.EventType.WEEKEND;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.dto.UserOrder;
-import christmas.model.EventResult;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class DiscountServiceTest {
-    private final DiscountService discountService = new DiscountService();
+    private final EventService eventService = new EventService();
 
     @Test
     @DisplayName("주문 정보를 전달하면, 그에 맞는 할인 정보를 반환한다.")
@@ -22,14 +21,14 @@ class DiscountServiceTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateEventResult(userOrder);
+        eventService.applyEvent(userOrder);
 
         //then
-        assertThat(eventResult.getDiscountPriceByEvent(PRESENT)).isEqualTo(25_000);
-        assertThat(eventResult.getDiscountPriceByEvent(CHRISTMAS)).isEqualTo(1_200);
-        assertThat(eventResult.getDiscountPriceByEvent(WEEKDAY)).isEqualTo(4_046);
-        assertThat(eventResult.getDiscountPriceByEvent(WEEKEND)).isEqualTo(0);
-        assertThat(eventResult.getDiscountPriceByEvent(SPECIAL)).isEqualTo(1_000);
+        assertThat(eventService.getDiscountPriceByEvent(PRESENT)).isEqualTo(25_000);
+        assertThat(eventService.getDiscountPriceByEvent(CHRISTMAS)).isEqualTo(1_200);
+        assertThat(eventService.getDiscountPriceByEvent(WEEKDAY)).isEqualTo(4_046);
+        assertThat(eventService.getDiscountPriceByEvent(WEEKEND)).isEqualTo(0);
+        assertThat(eventService.getDiscountPriceByEvent(SPECIAL)).isEqualTo(1_000);
 
     }
 
@@ -40,8 +39,8 @@ class DiscountServiceTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateEventResult(userOrder);
-        int totalBenefitPrice = eventResult.getTotalBenefitPrice();
+        eventService.applyEvent(userOrder);
+        int totalBenefitPrice = eventService.getTotalBenefitPrice();
 
         //then
         assertThat(totalBenefitPrice).isEqualTo(31_246);
@@ -54,8 +53,8 @@ class DiscountServiceTest {
         UserOrder userOrder = new UserOrder(10, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateEventResult(userOrder);
-        int discountedPrice = eventResult.getTotalBenefitPrice();
+        eventService.applyEvent(userOrder);
+        int discountedPrice = eventService.getTotalBenefitPrice();
 
         //then
         assertThat(discountedPrice).isEqualTo(0);

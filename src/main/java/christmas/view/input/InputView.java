@@ -1,6 +1,6 @@
 package christmas.view.input;
 
-import christmas.dto.SingleOrder;
+import christmas.dto.SingleMenu;
 import christmas.util.Parser;
 import christmas.validator.InputValidator;
 import java.util.List;
@@ -20,13 +20,13 @@ public class InputView {
         return Parser.parseToDate(input);
     }
 
-    public List<SingleOrder> askOrderMenu() {
+    public List<SingleMenu> askOrderMenu() {
         List<String> menus = Parser.parseToMenu(getInput(), ",");
 
         return menus.stream()
                 .map(singleOrder -> {
                     inputValidator.validateOrder(singleOrder);
-                    return SingleOrder.create(singleOrder);
+                    return SingleMenu.create(singleOrder);
                 })
                 .toList();
     }

@@ -3,7 +3,6 @@ package christmas.model;
 import static christmas.constants.event.EventRule.SPECIAL_DISCOUNT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import christmas.model.discount.SpecialEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

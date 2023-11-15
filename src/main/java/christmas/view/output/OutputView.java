@@ -19,10 +19,10 @@ import static christmas.constants.Message.TOTAL_HEADER;
 import static christmas.constants.menu.Menu.CHAMPAGNE;
 
 import christmas.constants.event.BadgeType;
-import christmas.constants.event.EventType;
 import christmas.constants.menu.Menu;
-import christmas.model.EventResult;
+import christmas.dto.EventDetail;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -80,26 +80,23 @@ public class OutputView {
         writer.printLine(stringBuilder.toString());
     }
 
-    public void printEventDetails(EventResult eventResult) {
+    public void printEventDetails(List<EventDetail> eventDetails) {
         StringBuilder stringBuilder = new StringBuilder(DISCOUNT_HEADER.getMessage())
                 .append(NEW_LINE.getMessage());
 
-        if (eventResult.isEventNotApplied()) {
+        if (eventDetails.isEmpty()) {
             stringBuilder.append(NONE.getMessage())
                     .append(NEW_LINE.getMessage());
             writer.printLine(stringBuilder.toString());
             return;
         }
-
-        eventResult.getDiscountApplied()
-                .forEach(entry -> stringBuilder.append(getDetailPerDiscount(eventResult, entry.getKey())));
+        eventDetails.forEach(detail -> stringBuilder.append(getDetailPerDiscount(detail)));
         writer.printLine(stringBuilder.toString());
     }
 
-    private String getDetailPerDiscount(EventResult eventResult, EventType eventType) {
-        int priceByDiscount = eventResult.getDiscountPriceByEvent(eventType);
-        return String.format(DISCOUNT_FORMAT.getMessage(), eventType.getDescription(),
-                decimalFormat.format(priceByDiscount));
+    private String getDetailPerDiscount(EventDetail eventDetail) {
+        return String.format(DISCOUNT_FORMAT.getMessage(), eventDetail.eventType().getDescription(),
+                decimalFormat.format(eventDetail.discountPrice()));
     }
 
     public void printTotalBenefitPrice(int totalBenefitPrice) {

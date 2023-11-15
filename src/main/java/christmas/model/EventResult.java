@@ -16,22 +16,12 @@ public class EventResult {
         discountResult = new EnumMap<>(EventType.class);
     }
 
-    //TODO: add를 통해 계속 값을 추가하는것보다, 생성자를 통해 한 번에 받고 처리하는게 나을듯
     public void addResult(EventType eventType, Eventable eventable) {
         discountResult.put(eventType, eventable);
     }
 
     public int getDiscountPriceByEvent(EventType eventType) {
-        int discountPrice = discountResult.get(eventType).getDiscountPrice();
-        if (discountPrice == 0) {
-            return 0;
-        }
-        return discountPrice;
-    }
-
-    //TODO: 굳이?
-    public Eventable getDiscountableByEvent(EventType eventType) {
-        return this.discountResult.get(eventType);
+        return discountResult.get(eventType).getDiscountPrice();
     }
 
     public int getTotalDiscountPrice() {

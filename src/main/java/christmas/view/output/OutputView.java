@@ -22,7 +22,6 @@ import christmas.constants.event.BadgeType;
 import christmas.constants.event.EventType;
 import christmas.constants.menu.Menu;
 import christmas.model.EventResult;
-import christmas.model.discount.Eventable;
 import java.text.DecimalFormat;
 import java.util.Map;
 
@@ -67,11 +66,11 @@ public class OutputView {
         writer.printNewLine(2);
     }
 
-    public void printPresent(Eventable presentDiscount) {
+    public void printPresent(int discountPrice) {
         StringBuilder stringBuilder = new StringBuilder(PRESENT_HEADER.getMessage())
                 .append(NEW_LINE.getMessage());
 
-        if (presentDiscount.getDiscountPrice() == 0) {
+        if (discountPrice == 0) {
             stringBuilder.append(NONE.getMessage())
                     .append(NEW_LINE.getMessage());
             writer.printLine(stringBuilder.toString());

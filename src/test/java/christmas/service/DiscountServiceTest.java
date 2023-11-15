@@ -22,7 +22,7 @@ class DiscountServiceTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateEventResult(userOrder);
 
         //then
         assertThat(eventResult.getDiscountPriceByEvent(PRESENT)).isEqualTo(25_000);
@@ -40,7 +40,7 @@ class DiscountServiceTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateEventResult(userOrder);
         int totalBenefitPrice = eventResult.getTotalBenefitPrice();
 
         //then
@@ -54,7 +54,7 @@ class DiscountServiceTest {
         UserOrder userOrder = new UserOrder(10, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateEventResult(userOrder);
         int discountedPrice = eventResult.getTotalBenefitPrice();
 
         //then

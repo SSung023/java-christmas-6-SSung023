@@ -17,7 +17,7 @@ import christmas.model.discount.WeekendEvent;
 
 public class DiscountService {
 
-    public EventResult calculateDiscountInfo(UserOrder userOrder) {
+    public EventResult calculateEventResult(UserOrder userOrder) {
         EventResult eventResult = new EventResult();
 
         if (!canJoinEvent(userOrder.orderPrice())) {

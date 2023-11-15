@@ -8,6 +8,8 @@ import static christmas.exception.ErrorCode.INVALID_MENU_ORDER;
 import christmas.util.Parser;
 
 public class InputValidator {
+    private final String ORDER_REGEX = "\\p{L}+-\\d+";
+
     public void validateDate(String input) {
         int parsed = Parser.parseToDate(input);
         if (parsed < EVENT_START.getValue() || EVENT_END.getValue() < parsed) {
@@ -16,9 +18,7 @@ public class InputValidator {
     }
 
     public void validateOrder(String input) {
-        //TODO: regex를 상수로?
-        String pattern = "\\p{L}+-\\d+";
-        if (!input.matches(pattern)) {
+        if (!input.matches(ORDER_REGEX)) {
             throw new IllegalArgumentException(INVALID_MENU_ORDER.getMessage());
         }
     }

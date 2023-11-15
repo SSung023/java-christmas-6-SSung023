@@ -1,10 +1,10 @@
 package christmas.controller;
 
+import static christmas.constants.event.EventType.PRESENT;
 import static christmas.constants.menu.MenuType.DESSERT;
 import static christmas.constants.menu.MenuType.MAIN;
 
 import christmas.constants.event.BadgeType;
-import christmas.constants.event.EventType;
 import christmas.dto.SingleOrder;
 import christmas.dto.UserOrder;
 import christmas.exception.RetryHandler;
@@ -33,10 +33,10 @@ public class EventController {
 
     public void run() {
         int visitDate = getVisitDate();
-        UserOrder userOrder = getOrderMenu(visitDate);
+        UserOrder userOrder = getMenuOrder(visitDate);
         printOrderInformation();
 
-        EventResult eventResult = getDiscountResult(userOrder);
+        EventResult eventResult = getEventResult(userOrder);
         printEventDetails(userOrder, eventResult);
 
         printBadge(eventResult);
@@ -50,7 +50,7 @@ public class EventController {
         return retryHandler.execute(inputView::askVisitDate, IllegalArgumentException.class);
     }
 
-    private UserOrder getOrderMenu(int visitDate) {
+    private UserOrder getMenuOrder(int visitDate) {
         outputView.printAskMenu();
         UserOrder userOrder = retryHandler.execute(() -> getUserOrder(visitDate), IllegalArgumentException.class);
         outputView.printPreview(visitDate);
@@ -71,19 +71,17 @@ public class EventController {
         outputView.printBeforeDiscountPrice(menuService.getOrderPrice());
     }
 
-    private EventResult getDiscountResult(UserOrder userOrder) {
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
-
-        outputView.printPresent(eventResult.getDiscountableByEvent(EventType.PRESENT));
-        outputView.printEventDetails(eventResult);
-
-        return eventResult;
+    private EventResult getEventResult(UserOrder userOrder) {
+        return discountService.calculateEventResult(userOrder);
     }
 
     private void printEventDetails(UserOrder userOrder, EventResult eventResult) {
-        outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
-
+        int discountPrice = eventResult.getDiscountPriceByEvent(PRESENT);
         int expectedPrice = discountService.getExpectedPrice(userOrder, eventResult);
+
+        outputView.printPresent(discountPrice);
+        outputView.printEventDetails(eventResult);
+        outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
         outputView.printExpectedPrice(expectedPrice);
     }
 

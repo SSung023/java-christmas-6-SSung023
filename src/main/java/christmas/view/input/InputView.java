@@ -21,10 +21,8 @@ public class InputView {
     }
 
     public List<SingleOrder> askOrderMenu() {
-        //TODO: ,를 delimiter 상수로
         List<String> menus = Parser.parseToMenu(getInput(), ",");
 
-        //TODO: 코드가 맘에 안들어.. 안이뻐..
         return menus.stream()
                 .map(singleOrder -> {
                     inputValidator.validateOrder(singleOrder);

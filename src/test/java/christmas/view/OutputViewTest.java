@@ -4,7 +4,6 @@ import christmas.constants.event.BadgeType;
 import christmas.constants.menu.Menu;
 import christmas.dto.UserOrder;
 import christmas.model.EventResult;
-import christmas.model.discount.PresentEvent;
 import christmas.service.DiscountService;
 import christmas.view.output.ConsoleWriter;
 import christmas.view.output.OutputView;
@@ -21,15 +20,13 @@ class OutputViewTest {
     @Test
     @DisplayName("증정 이벤트에 대한 출력 테스트 - 12만원 이상이면 샴페인 1개를 출력")
     public void presentDiscountTest() {
-        PresentEvent presentEvent = PresentEvent.create(120_000);
-        outputView.printPresent(presentEvent);
+        outputView.printPresent(120_000);
     }
 
     @Test
     @DisplayName("증정 이벤트에 대한 출력 테스트 - 12만원 미만이면 없음을 출력")
     public void presentDiscountTestd() {
-        PresentEvent presentEvent = PresentEvent.create(10000);
-        outputView.printPresent(presentEvent);
+        outputView.printPresent(10000);
     }
 
     @Test
@@ -39,7 +36,7 @@ class OutputViewTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateEventResult(userOrder);
 
         //then
         outputView.printEventDetails(eventResult);
@@ -52,7 +49,7 @@ class OutputViewTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateEventResult(userOrder);
 
         //then
         outputView.printTotalBenefitPrice(eventResult.getTotalBenefitPrice());
@@ -65,7 +62,7 @@ class OutputViewTest {
         UserOrder userOrder = new UserOrder(142_000, 3, 2, 2);
 
         //when
-        EventResult eventResult = discountService.calculateDiscountInfo(userOrder);
+        EventResult eventResult = discountService.calculateEventResult(userOrder);
         int expectedPrice = discountService.getExpectedPrice(userOrder, eventResult);
 
         //then
